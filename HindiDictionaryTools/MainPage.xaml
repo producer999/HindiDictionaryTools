@@ -11,6 +11,18 @@
     <Page.Resources>
         <SolidColorBrush x:Key="SE-DarkGray" Color="#262626"/>
         <SolidColorBrush x:Key="SE-Yellow" Color="#ffde00"/>
+        <SolidColorBrush x:Key="SE-OffWhite" Color="WhiteSmoke"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Foreground="{StaticResource SE-OffWhite}" Text="{Binding}"></TextBlock>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
     </Page.Resources>
     
     <Grid Background="{StaticResource SE-DarkGray}">
@@ -28,32 +40,15 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.00.02 6/5/17" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.00.02 6/5/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"/>
+                <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-Yellow}" Header="Definition"/>
             </StackPanel>
-            
-        </Grid>
-        
-        
-        <controls:GridSplitter 
-            Grid.Column="1"
-                Width="11"
-            ResizeBehavior="BasedOnAlignment"
-            ResizeDirection="Auto"
-                Background="Gray"
-                Foreground="White" 
-                FontSize="13">
-            <controls:GridSplitter.Element>
-                <Grid>
-                    <TextBlock HorizontalAlignment="Center" 
-                                   IsHitTestVisible="False"
-                                   VerticalAlignment="Center"  
-                                    Text="&#xE784;"
-                                   Foreground="Black" 
-                                   FontFamily="Segoe MDL2 Assets">
-                    </TextBlock>
-                </Grid>
-            </controls:GridSplitter.Element>
-        </controls:GridSplitter>
 
+        </Grid>
+        <StackPanel Grid.Row="1">
+         
+        </StackPanel>
+        
     </Grid>
 </Page>
