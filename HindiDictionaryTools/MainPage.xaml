@@ -6,8 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:toolkit="using:MyToolkit.Controls"
     mc:Ignorable="d">
 
+    <Page.DataContext>
+        <local:HindiDictionary/>
+    </Page.DataContext>
+    
     <Page.Resources>
         <SolidColorBrush x:Key="SE-DarkGray" Color="#262626"/>
         <SolidColorBrush x:Key="SE-Yellow" Color="#ffde00"/>
@@ -22,13 +27,16 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <local:PartsOfSpeechConverter x:Key="POSConverter"/>
+
     </Page.Resources>
     
     <Grid Background="{StaticResource SE-DarkGray}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="4"/>
             <RowDefinition Height="*"/> 
         </Grid.RowDefinitions>
 
@@ -40,15 +48,84 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.00.02 6/5/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
-                <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"/>
-                <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-Yellow}" Header="Definition"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.00.03 6/6/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-Yellow}" Header="Hindi Term"/>
+                <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-Yellow}" Header="Translation"/>
             </StackPanel>
 
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <TextBlock Text="" Margin="10"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="10" Text="Total Translations: " Foreground="{StaticResource SE-OffWhite}"/>
+                    <TextBlock Margin="10" Text="{Binding Dictionary.Count}" Foreground="{StaticResource SE-Yellow}"/>
+                </StackPanel>
+            </StackPanel>
+            
+
         </Grid>
-        <StackPanel Grid.Row="1">
-         
-        </StackPanel>
+
+        <controls:GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" 
+                               ResizeBehavior="PreviousAndNext" ResizeDirection="Rows" Background="Black">
+            <controls:GridSplitter.Element>
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" VerticalAlignment="Center"
+                               Text="&#xE784;" Foreground="{StaticResource SE-Yellow}" FontFamily="Segoe MDL2 Assets"/>
+                </Grid>
+            </controls:GridSplitter.Element>
+
+        </controls:GridSplitter>
+        
+        <Grid Grid.Row="2">
+
+            <toolkit:DataGrid x:Name="TranslationListView" Margin="10" SelectionMode="Single" HorizontalContentAlignment="Stretch" 
+                              ItemsSource="{Binding Dictionary}"
+                              toolkit:DataGridExtensions.UseSingleSelectionAndDeselection="True"
+                              HeaderBackground="Transparent" RowBackgroundOddBrush="#373737" RowBackgroundEvenBrush="#474747" FontFamily="Nirmala UI">
+
+                <toolkit:DataGrid.Columns>
+
+                    <toolkit:DataGridTextColumn Width="2*" Binding="{Binding Term}" IsAscendingDefault="True" Foreground="{StaticResource SE-OffWhite}">
+                        <toolkit:DataGridTextColumn.Header>
+                            <TextBlock Text="Term" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
+                        </toolkit:DataGridTextColumn.Header>
+                    </toolkit:DataGridTextColumn>
+
+                    <toolkit:DataGridTextColumn Width="2*" Binding="{Binding ImportedTranslation}" IsAscendingDefault="False" Foreground="{StaticResource SE-OffWhite}">
+                        <toolkit:DataGridTextColumn.Header>
+                            <TextBlock Text="Translation" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
+                        </toolkit:DataGridTextColumn.Header>
+                    </toolkit:DataGridTextColumn>
+
+                    <toolkit:DataGridTextColumn Width="2*" Binding="{Binding UserTranslation}" IsAscendingDefault="False" Foreground="{StaticResource SE-OffWhite}">
+                        <toolkit:DataGridTextColumn.Header>
+                            <TextBlock Text="User Translation" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
+                        </toolkit:DataGridTextColumn.Header>
+                    </toolkit:DataGridTextColumn>
+
+                    <toolkit:DataGridTextColumn Width="2*" Binding="{Binding GoogleTranslation}" IsAscendingDefault="False" Foreground="{StaticResource SE-OffWhite}">
+                        <toolkit:DataGridTextColumn.Header>
+                            <TextBlock Text="Google Translation" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
+                        </toolkit:DataGridTextColumn.Header>
+                    </toolkit:DataGridTextColumn>
+
+                    <toolkit:DataGridTextColumn Width="1*" Binding="{Binding PartOfSpeech, Converter={StaticResource POSConverter}}" IsAscendingDefault="False" Foreground="{StaticResource SE-OffWhite}">
+                        <toolkit:DataGridTextColumn.Header>
+                            <TextBlock Text="PoS" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
+                        </toolkit:DataGridTextColumn.Header>
+                    </toolkit:DataGridTextColumn>
+
+                </toolkit:DataGrid.Columns>
+                
+                
+                
+                
+                
+                
+            </toolkit:DataGrid>
+            
+            
+            
+        </Grid>
         
     </Grid>
 </Page>

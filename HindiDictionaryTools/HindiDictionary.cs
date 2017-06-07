@@ -41,11 +41,12 @@ namespace HindiDictionaryTools
 
         public HindiDictionary()
         {
-            FileName = "HDT_Database_V1";
+            FileName = "HINDI_DB_01";
             DBHelper.CreateDatabase(FileName);
 
             Dictionary = DBHelper.GetAllTranslations();
-            if(Dictionary.Count == 0)
+
+            if (Dictionary.Count == 0)
             {
                 CurrentTranslation = null;
             }
@@ -69,6 +70,7 @@ namespace HindiDictionaryTools
             else
             {
                 CurrentTranslation = Dictionary.First();
+               
             }
         }
 

@@ -27,8 +27,12 @@ namespace HindiDictionaryTools
                 using (SQLiteConnection conn = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), DB_PATH))
                 {              
                     conn.CreateTable<HindiTranslation>();
-                    return true;
+                    
                 }
+
+                TranslationDataParser.ImportFromText();
+
+                return true;
             }
             else
             {

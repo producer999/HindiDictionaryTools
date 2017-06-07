@@ -109,6 +109,7 @@ namespace HindiDictionaryTools
             _googleTranslation = "";
             _importedTranslation = importTrans;
             _partOfSpeech = PartsOfSpeechConverter.ImportPartOfSpeechFromString(pos);
+            _examples = examples;
         }
 
 

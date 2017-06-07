@@ -14,6 +14,7 @@ References:
 http://bsubramanyamraju.blogspot.in/2016/12/windows-10-uwp-sqlite-how-to-store-data.html
 http://www.cfilt.iitb.ac.in/~hdict/webinterface_user/index.php
 http://www.c-sharpcorner.com/UploadFile/2b876a/consume-web-service-using-httpclient-to-post-and-get-json-da/
+https://stackoverflow.com/questions/23144519/gridview-with-2-columns-fill-width
 
 
 Coming Soon:
@@ -24,8 +25,22 @@ Coming Soon:
 ****store alternate definitions, alternate forms and examples as JSON in the databse
 ****add stop button during import that cancels the import where it is
 ****add timer to show how long an import took
-****add a tool tip when mouse over the definition in the list to show all details
 ****add button to get all google translations (maybe)
+****decrease padding slightly on DataGrid Items
+****add Item Detail Template to the DataGrid for editing and viewing all details
+****fix incorrect converting of part of speech
+****fix DataGrid does not populate after initial loading of app (database creation from text) - async issue
+
+
+v 0.00.03 6/6/2017
+-added a GridSplitter (UWP Toolkit) between the entry fields and the ListView
+-fixed Data Context of the Page to the HindiDictionary class
+-Bound the ListView to the HindiDictionary's Dictionary collection and bound the Items to the properties of the Translations in the collection
+-created listview styling
+-replaced listview with MyToolkit.Extended DataGrid and tested functionality
+-customized functionality and styling of DataGrid
+-make it so the first time you run the app it creates the database from the text file if databse is empty
+-add a textblock up top to display the unmber of translations in the dictionary
 
 
 v 0.00.02 6/5/2017
