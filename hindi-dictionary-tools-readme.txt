@@ -27,9 +27,15 @@ Coming Soon:
 ****add timer to show how long an import took
 ****add button to get all google translations (maybe)
 ****decrease padding slightly on DataGrid Items
-****add Item Detail Template to the DataGrid for editing and viewing all details
-****fix incorrect converting of part of speech
 ****fix DataGrid does not populate after initial loading of app (database creation from text) - async issue
+****get part of speech combobox binding and coverter working correctly
+****get database to update all changes made (add button?, do automatically?)
+
+
+v 0.00.04 6/7/2017
+-added fields and buttons for Translation detail editing and viewing
+-add gridsplitter between sections on the top row
+-two way data binding working between the current details and the dictionary list view
 
 
 v 0.00.03 6/6/2017
@@ -40,7 +46,8 @@ v 0.00.03 6/6/2017
 -replaced listview with MyToolkit.Extended DataGrid and tested functionality
 -customized functionality and styling of DataGrid
 -make it so the first time you run the app it creates the database from the text file if databse is empty
--add a textblock up top to display the unmber of translations in the dictionary
+-add a textblock up top to display the number of translations in the dictionary
+-fix incorrect converting of part of speech
 
 
 v 0.00.02 6/5/2017

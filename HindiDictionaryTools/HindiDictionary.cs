@@ -30,7 +30,7 @@ namespace HindiDictionaryTools
         public HindiTranslation CurrentTranslation
         {
             get { return _currentTranslation; }
-            private set
+            set
             {
                 _currentTranslation = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentTranslation"));
@@ -79,6 +79,7 @@ namespace HindiDictionaryTools
             Dictionary.Add(newTranslation);
             DBHelper.Insert(newTranslation);
         }
+
 
     }
 }

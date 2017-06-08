@@ -72,7 +72,7 @@ namespace HindiDictionaryTools
         {
             using (SQLiteConnection conn = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), DB_PATH))
             {
-                var def = conn.Query<HindiTranslation>("SELECT * FROM Definition WHERE ID =" + id).FirstOrDefault();
+                var def = conn.Query<HindiTranslation>("SELECT * FROM HindiTranslation WHERE ID =" + id).FirstOrDefault();
                 return def;
             }
         }
@@ -102,7 +102,7 @@ namespace HindiDictionaryTools
         {
             using (SQLiteConnection conn = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), DB_PATH))
             {
-                var existingEntry = conn.Query<HindiTranslation>("SELECT * FROM Definition WHERE ID =" + translation.ID).FirstOrDefault();
+                var existingEntry = conn.Query<HindiTranslation>("SELECT * FROM HindiTranslation WHERE ID =" + translation.ID).FirstOrDefault();
 
                 if (existingEntry != null)
                 {
@@ -131,7 +131,7 @@ namespace HindiDictionaryTools
         {
             using (SQLiteConnection conn = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), DB_PATH))
             {
-                var existingEntry = conn.Query<HindiTranslation>("SELECT * FROM Definition where ID =" + id).FirstOrDefault();
+                var existingEntry = conn.Query<HindiTranslation>("SELECT * FROM HindiTranslation where ID =" + id).FirstOrDefault();
 
                 if (existingEntry != null)
                 {

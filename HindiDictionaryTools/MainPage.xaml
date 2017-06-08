@@ -35,7 +35,7 @@
     <Grid Background="{StaticResource SE-DarkGray}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="300"/>
             <RowDefinition Height="4"/>
             <RowDefinition Height="*"/> 
         </Grid.RowDefinitions>
@@ -44,13 +44,15 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="4"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.00.03 6/6/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.00.04 6/7/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
                 <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-Yellow}" Header="Hindi Term"/>
                 <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-Yellow}" Header="Translation"/>
+                <Button Content="Add Translation" Margin="10" />
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
@@ -60,7 +62,61 @@
                     <TextBlock Margin="10" Text="{Binding Dictionary.Count}" Foreground="{StaticResource SE-Yellow}"/>
                 </StackPanel>
             </StackPanel>
-            
+
+            <controls:GridSplitter Grid.Column="2" Width="4" VerticalAlignment="Stretch" 
+                               ResizeBehavior="PreviousAndNext"  ResizeDirection="Columns" Background="Black">
+                <controls:GridSplitter.Element>
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" VerticalAlignment="Center"
+                               Text="&#xE784;" Foreground="{StaticResource SE-Yellow}" FontFamily="Segoe MDL2 Assets"/>
+                    </Grid>
+                </controls:GridSplitter.Element>
+
+            </controls:GridSplitter>
+
+            <ScrollViewer Grid.Column="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <TextBlock Text="" Margin="10"/>
+                        <TextBox Name="CurrentTermField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"
+                                     Text="{Binding CurrentTranslation.Term, Mode=TwoWay}"/>
+                        <TextBox Name="CurrentImportedTranslationField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Translation"
+                                     Text="{Binding CurrentTranslation.ImportedTranslation, Mode=TwoWay}"/>
+                        <TextBox Name="CurrentUserTranslationField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="User Translation"
+                                     Text="{Binding CurrentTranslation.UserTranslation, Mode=TwoWay}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="CurrentGoogleTranslationField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Google Translation"
+                                     Text="{Binding CurrentTranslation.GoogleTranslation, Mode=OneWay}"/>
+                            <Button Content="Refresh" Margin="20" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <TextBlock Text="" Margin="10"/>
+                        <ComboBox Margin="10" Header="Part of Speech" SelectedItem="{Binding CurrentTranslation.PartOfSpeech, Mode=TwoWay, Converter={StaticResource POSConverter}}">
+                            <ComboBoxItem>N(F)</ComboBoxItem>
+                            <ComboBoxItem>N(M)</ComboBoxItem>
+                            <ComboBoxItem>V</ComboBoxItem>
+                            <ComboBoxItem>V(N-T)</ComboBoxItem>
+                            <ComboBoxItem>ADV</ComboBoxItem>
+                            <ComboBoxItem>ADJ</ComboBoxItem>
+                            <ComboBoxItem>PRON</ComboBoxItem>
+                            <ComboBoxItem>CONJ</ComboBoxItem>
+                            <ComboBoxItem>INTJ</ComboBoxItem>
+                            <ComboBoxItem>POSTPN</ComboBoxItem>
+                            <ComboBoxItem>CASE</ComboBoxItem>
+                            <ComboBoxItem>OTHER</ComboBoxItem>
+                        </ComboBox>
+
+                    </StackPanel>
+
+                </Grid>
+            </ScrollViewer>
 
         </Grid>
 
@@ -78,7 +134,7 @@
         <Grid Grid.Row="2">
 
             <toolkit:DataGrid x:Name="TranslationListView" Margin="10" SelectionMode="Single" HorizontalContentAlignment="Stretch" 
-                              ItemsSource="{Binding Dictionary}"
+                              ItemsSource="{Binding Dictionary}" SelectedItem="{Binding CurrentTranslation, Mode=TwoWay}"
                               toolkit:DataGridExtensions.UseSingleSelectionAndDeselection="True"
                               HeaderBackground="Transparent" RowBackgroundOddBrush="#373737" RowBackgroundEvenBrush="#474747" FontFamily="Nirmala UI">
 
@@ -115,12 +171,7 @@
                     </toolkit:DataGridTextColumn>
 
                 </toolkit:DataGrid.Columns>
-                
-                
-                
-                
-                
-                
+              
             </toolkit:DataGrid>
             
             

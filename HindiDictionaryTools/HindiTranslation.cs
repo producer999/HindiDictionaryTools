@@ -76,7 +76,7 @@ namespace HindiDictionaryTools
         public PartsOfSpeech PartOfSpeech
         {
             get { return _partOfSpeech; }
-            private set
+            set
             {
                 _partOfSpeech = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PartOfSpeech"));

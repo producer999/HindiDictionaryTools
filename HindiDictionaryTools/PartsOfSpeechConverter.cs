@@ -64,7 +64,41 @@ namespace HindiDictionaryTools
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            string pos = value.ToString();
+
+            switch (pos)
+            {
+                case "N":
+                    return PartsOfSpeech.NounF;
+                case "N(F)":
+                    return PartsOfSpeech.NounF;
+                case "N(M)":
+                    return PartsOfSpeech.NounM;
+                case "V":
+                    return PartsOfSpeech.Verb;
+                case "V(N-T)":
+                    return PartsOfSpeech.VerbNT;
+                case "V(T)":
+                    return PartsOfSpeech.VerbT;
+                case "ADV":
+                    return PartsOfSpeech.Adverb;
+                case "ADJ":
+                    return PartsOfSpeech.Adjective;
+                case "PRON":
+                    return PartsOfSpeech.Pronoun;
+                case "CONJ":
+                    return PartsOfSpeech.Conjunction;
+                case "INTJ":
+                    return PartsOfSpeech.Interjection;
+                case "POSTPN":
+                    return PartsOfSpeech.Postposition;
+                case "CASE":
+                    return PartsOfSpeech.CaseMarker;
+                case "OTHER":
+                    return PartsOfSpeech.Other;
+                default:
+                    return PartsOfSpeech.Other;
+            }
         }
 
         public static PartsOfSpeech ImportPartOfSpeechFromString(string pos)
