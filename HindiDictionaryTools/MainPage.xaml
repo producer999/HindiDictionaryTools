@@ -35,7 +35,7 @@
     <Grid Background="{StaticResource SE-DarkGray}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="375"/>
             <RowDefinition Height="4"/>
             <RowDefinition Height="*"/> 
         </Grid.RowDefinitions>
@@ -49,7 +49,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.00.04 6/7/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.00.05 6/14/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
                 <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-Yellow}" Header="Hindi Term"/>
                 <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-Yellow}" Header="Translation"/>
                 <Button Content="Add Translation" Margin="10" />
@@ -83,35 +83,26 @@
 
                     <StackPanel Grid.Column="0" Orientation="Vertical">
                         <TextBlock Text="" Margin="10"/>
-                        <TextBox Name="CurrentTermField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"
+                        <TextBox Name="CurrentTermField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"
                                      Text="{Binding CurrentTranslation.Term, Mode=TwoWay}"/>
-                        <TextBox Name="CurrentImportedTranslationField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Translation"
+                        <TextBox Name="CurrentImportedTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Translation"
                                      Text="{Binding CurrentTranslation.ImportedTranslation, Mode=TwoWay}"/>
-                        <TextBox Name="CurrentUserTranslationField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="User Translation"
+                        <TextBox Name="CurrentUserTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="User Translation"
                                      Text="{Binding CurrentTranslation.UserTranslation, Mode=TwoWay}"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Name="CurrentGoogleTranslationField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Google Translation"
+                            <TextBox Name="CurrentGoogleTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Google Translation"
                                      Text="{Binding CurrentTranslation.GoogleTranslation, Mode=OneWay}"/>
-                            <Button Content="Refresh" Margin="20" />
+                            <Button Content="Refresh" Margin="10,38,10,10" />
                         </StackPanel>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBlock Text="" Margin="10"/>
-                        <ComboBox Margin="10" Header="Part of Speech" SelectedItem="{Binding CurrentTranslation.PartOfSpeech, Mode=TwoWay, Converter={StaticResource POSConverter}}">
-                            <ComboBoxItem>N(F)</ComboBoxItem>
-                            <ComboBoxItem>N(M)</ComboBoxItem>
-                            <ComboBoxItem>V</ComboBoxItem>
-                            <ComboBoxItem>V(N-T)</ComboBoxItem>
-                            <ComboBoxItem>ADV</ComboBoxItem>
-                            <ComboBoxItem>ADJ</ComboBoxItem>
-                            <ComboBoxItem>PRON</ComboBoxItem>
-                            <ComboBoxItem>CONJ</ComboBoxItem>
-                            <ComboBoxItem>INTJ</ComboBoxItem>
-                            <ComboBoxItem>POSTPN</ComboBoxItem>
-                            <ComboBoxItem>CASE</ComboBoxItem>
-                            <ComboBoxItem>OTHER</ComboBoxItem>
+                        <ComboBox Name ="posCombo" Margin="10" Header="Part of Speech" Foreground="{StaticResource SE-OffWhite}"
+                                  SelectedItem="{Binding CurrentTranslation.PartOfSpeech, Mode=TwoWay}">
                         </ComboBox>
+                        <Button Content="Update Translation" Margin="10" IsEnabled="False" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                />
 
                     </StackPanel>
 

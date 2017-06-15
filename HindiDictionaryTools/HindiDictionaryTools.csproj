@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DBHelper.cs" />
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="GoogleTranslateService.cs" />
     <Compile Include="HindiDictionary.cs" />
     <Compile Include="HindiTranslation.cs" />

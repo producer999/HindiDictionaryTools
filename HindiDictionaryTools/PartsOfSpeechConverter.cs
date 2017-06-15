@@ -64,8 +64,8 @@ namespace HindiDictionaryTools
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
+          
             string pos = value.ToString();
-
             switch (pos)
             {
                 case "N":
@@ -133,6 +133,15 @@ namespace HindiDictionaryTools
                     return PartsOfSpeech.CaseMarker;
                 default:
                     return PartsOfSpeech.Other;
+            }
+        }
+
+
+        public static IEnumerable<PartsOfSpeech> PartsOfSpeechValues
+        {
+            get
+            {
+                return Enum.GetValues(typeof(PartsOfSpeech)).Cast<PartsOfSpeech>();
             }
         }
     }

@@ -26,10 +26,22 @@ Coming Soon:
 ****add stop button during import that cancels the import where it is
 ****add timer to show how long an import took
 ****add button to get all google translations (maybe)
-****decrease padding slightly on DataGrid Items
 ****fix DataGrid does not populate after initial loading of app (database creation from text) - async issue
-****get part of speech combobox binding and coverter working correctly
 ****get database to update all changes made (add button?, do automatically?)
+****find way to bind PartsOfSpeech enum to combobox ItemSource without using code behind
+****update code to use complied bindings instead
+
+
+v 00.00.06 6/15/2017
+****make buttons look different for enabled and disabled and fix colors and text
+-added basic update translation button using ICommand
+****make call to automatically UpdateTranslation to databse when navigating away from a translation
+
+
+v 00.00.05 6/14/2017
+-bound part of speech combobox ItemSource to partsofspeech enumeration
+-got current translation part of speech to populate in combobox selected item and bind both ways
+-fixed textbox and grid sizing on initial load
 
 
 v 0.00.04 6/7/2017

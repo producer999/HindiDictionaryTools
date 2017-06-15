@@ -22,9 +22,17 @@ namespace HindiDictionaryTools
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        //public HindiDictionary CurrentDictionary { get; set; }
+
+
         public MainPage()
         {
             this.InitializeComponent();
+
+           // CurrentDictionary = new HindiDictionary("HINDI_DB_01");
+
+            var _posEnum = Enum.GetValues(typeof(PartsOfSpeech)).Cast<PartsOfSpeech>();
+            posCombo.ItemsSource = _posEnum.ToList();
         }
     }
 }

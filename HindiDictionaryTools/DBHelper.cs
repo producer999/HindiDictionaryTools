@@ -20,6 +20,8 @@ namespace HindiDictionaryTools
         public static bool CreateDatabase(string DB_NAME)
         {
             DB_NAME += ".sqlite";
+
+            //If specified databse file does not exist, ask to import data from a text file into a new database
             if (!CheckFileExists(DB_NAME).Result)
             {
                 DB_PATH = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, DB_NAME);

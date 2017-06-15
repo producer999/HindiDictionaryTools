@@ -22,11 +22,14 @@ namespace HindiDictionaryTools
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //private ObservableCollection<HindiTranslation> _dictionary = new ObservableCollection<HindiTranslation>();
-        private HindiTranslation _currentTranslation;
-        
+        //Public Fields
+
+        public string FileName { get; set; }
         public ObservableCollection<HindiTranslation> Dictionary { get; private set; }
 
+        //Private Fields
+
+        private HindiTranslation _currentTranslation;
         public HindiTranslation CurrentTranslation
         {
             get { return _currentTranslation; }
@@ -37,14 +40,41 @@ namespace HindiDictionaryTools
             }
         }
 
-        public string FileName { get; set; }
+        //Commands
+
+        private DelegateCommand _updateTranslationCommand;
+        public DelegateCommand UpdateTranslationCommand
+        {
+            get { return _updateTranslationCommand; }
+            set
+            {
+                _updateTranslationCommand = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UpdateTranslationCommand"));
+            }
+        }
+
+        private DelegateCommand _addTranslationCommand;
+        public DelegateCommand AddTranslationCommand
+        {
+            get { return _addTranslationCommand; }
+            set
+            {
+                _addTranslationCommand = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AddTranslationCommand"));
+            }
+        }
+
+        //Constructors
 
         public HindiDictionary()
         {
-            FileName = "HINDI_DB_01";
+            
+            FileName = "HINDI_DB_DEFAULT";
             DBHelper.CreateDatabase(FileName);
 
             Dictionary = DBHelper.GetAllTranslations();
+
+            UpdateTranslationCommand = new DelegateCommand(ExecuteUpdateTranslation, CanExecuteUpdateTranslation);
 
             if (Dictionary.Count == 0)
             {
@@ -54,6 +84,7 @@ namespace HindiDictionaryTools
             {
                 CurrentTranslation = Dictionary.First();
             }
+            
         }
 
         public HindiDictionary(string fileName)
@@ -62,6 +93,8 @@ namespace HindiDictionaryTools
             DBHelper.CreateDatabase(FileName);
 
             Dictionary = DBHelper.GetAllTranslations();
+
+            UpdateTranslationCommand = new DelegateCommand(ExecuteUpdateTranslation, CanExecuteUpdateTranslation);
 
             if (Dictionary.Count == 0)
             {
@@ -80,6 +113,30 @@ namespace HindiDictionaryTools
             DBHelper.Insert(newTranslation);
         }
 
+        public void UpdateTranslation()
+        {
+            DBHelper.UpdateTranslation(CurrentTranslation);
+        }
 
+        //Command Methods
+
+        private bool CanExecuteUpdateTranslation(object obj)
+        {
+            return CurrentTranslation != null;
+        }
+        public void ExecuteUpdateTranslation(object obj)
+        {
+            DBHelper.UpdateTranslation(CurrentTranslation);
+        }
+
+
+        private bool CanExecuteAddTranslation(object obj)
+        {
+            return true;
+        }
+        public void ExecuteAddNewTranslation(object obj)
+        {
+
+        }
     }
 }
