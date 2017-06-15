@@ -101,8 +101,8 @@
                         <ComboBox Name ="posCombo" Margin="10" Header="Part of Speech" Foreground="{StaticResource SE-OffWhite}"
                                   SelectedItem="{Binding CurrentTranslation.PartOfSpeech, Mode=TwoWay}">
                         </ComboBox>
-                        <Button Content="Update Translation" Margin="10" IsEnabled="False" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
-                                />
+                        <Button Content="Update Translation" Margin="10" IsEnabled="True" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                Command="{Binding UpdateTranslationCommand}"/>
 
                     </StackPanel>
 
