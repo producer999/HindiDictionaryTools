@@ -19,23 +19,49 @@ https://stackoverflow.com/questions/23144519/gridview-with-2-columns-fill-width
 
 Coming Soon:
 
-****when adding definitions, only refresh the newest one instead of refreshing the entire dictionary (prevent flikr)
+****fix funcionailty of part of speech ComboBox
+****fix listview binding on top right (doesnt show null values when deselecting translations)
 ****when pressing Enter in def entry fields, activate the Add Contact Button
 ****do a check on Add Contact that the Word is not in english, devanagari only
 ****store alternate definitions, alternate forms and examples as JSON in the databse
 ****add stop button during import that cancels the import where it is
 ****add timer to show how long an import took
 ****add button to get all google translations (maybe)
-****fix DataGrid does not populate after initial loading of app (database creation from text) - async issue
-****get database to update all changes made (add button?, do automatically?)
+****fix DataGrid does not populate after initial loading of app (database creation from text)
+	****calling Dictionary = GetAllTranslations does not update the listview binding
+****get database to update all changes made automatially (add button?, do automatically?)
 ****find way to bind PartsOfSpeech enum to combobox ItemSource without using code behind
-****update code to use complied bindings instead
+****find out why using x:Bind on an enum causes stack overflow
+****find out if you can use x:Bind/x:DataType for items in DataGrid List
+****replace code behind AddNewTranslation_Click event handler with MVVM implementation
+****implement searching of the translation list (look up DataGrid.SetFilter)
+
+
+v 00.00.08 6/21/2017
+****parse the part of speech data to look for N(F) or N(M) and verb type
+****make buttons look different for enabled and disabled and fix colors and text
+****make call to automatically UpdateTranslation to databse when navigating away from a translation
+
+
+v 00.00.07 6/20/2017
+-added Add Translation button functionality in code behind (need to find a way to do with Command or x:Bind)
+-fix NullReferenceException when clicking a translation, updating a field, then selecting the same one from list
+	-its setting SelectedItem to null in translation list, THEN trying to update the binding
+	-diabled the ability to deselect an item in the list
+-implemented basic functionality to update edits to current translation in databse when selecting another one in list
+-implemented google translation refresh button for current translation
+-added delete current translation button functionality
+-added clear database button
+-added import from file button and removed automatic file import when initializing application without a database 
+-added some error checking to prevent null references
+-when adding definitions, only refresh the newest one instead of refreshing the entire dictionary (prevent flikr)
+-adjusted TranslationParser to account for the longer list of translations and tested importing from big file
 
 
 v 00.00.06 6/15/2017
-****make buttons look different for enabled and disabled and fix colors and text
+
 -added basic update translation button using ICommand
-****make call to automatically UpdateTranslation to databse when navigating away from a translation
+-update code to use complied bindings instead
 
 
 v 00.00.05 6/14/2017

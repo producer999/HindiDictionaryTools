@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,25 +43,14 @@ namespace HindiDictionaryTools
 
         //Commands
 
-        private DelegateCommand _updateTranslationCommand;
-        public DelegateCommand UpdateTranslationCommand
+        private DelegateCommand _addNewTranslationCommand;
+        public DelegateCommand AddNewTranslationCommand
         {
-            get { return _updateTranslationCommand; }
+            get { return _addNewTranslationCommand; }
             set
             {
-                _updateTranslationCommand = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UpdateTranslationCommand"));
-            }
-        }
-
-        private DelegateCommand _addTranslationCommand;
-        public DelegateCommand AddTranslationCommand
-        {
-            get { return _addTranslationCommand; }
-            set
-            {
-                _addTranslationCommand = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AddTranslationCommand"));
+                _addNewTranslationCommand = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AddNewTranslationCommand"));
             }
         }
 
@@ -68,7 +58,7 @@ namespace HindiDictionaryTools
 
         public HindiDictionary()
         {
-            
+            /*
             FileName = "HINDI_DB_DEFAULT";
             DBHelper.CreateDatabase(FileName);
 
@@ -84,7 +74,7 @@ namespace HindiDictionaryTools
             {
                 CurrentTranslation = Dictionary.First();
             }
-            
+            */
         }
 
         public HindiDictionary(string fileName)
@@ -94,7 +84,7 @@ namespace HindiDictionaryTools
 
             Dictionary = DBHelper.GetAllTranslations();
 
-            UpdateTranslationCommand = new DelegateCommand(ExecuteUpdateTranslation, CanExecuteUpdateTranslation);
+            AddNewTranslationCommand = new DelegateCommand(AddNewTranslation, CanExecuteAddNewTranslation);
 
             if (Dictionary.Count == 0)
             {
@@ -107,36 +97,82 @@ namespace HindiDictionaryTools
             }
         }
 
-        public void AddNewTranslation(HindiTranslation newTranslation)
+        public void AddNewTranslation(string newTerm, string newUserTranslation)
         {
-            Dictionary.Add(newTranslation);
-            DBHelper.Insert(newTranslation);
+            if(!String.IsNullOrWhiteSpace(newTerm))
+            {
+                if(String.IsNullOrWhiteSpace(newUserTranslation))
+                {
+                    newUserTranslation = "";
+                }
+
+                HindiTranslation newTranslation = new HindiTranslation(newTerm, newUserTranslation);
+
+                Dictionary.Add(newTranslation);
+                DBHelper.Insert(newTranslation);
+            }         
         }
 
-        public void UpdateTranslation()
+        public async void ImportTranslationsFromFile()
         {
-            DBHelper.UpdateTranslation(CurrentTranslation);
+            if(await TranslationDataParser.ImportFromText())
+            {
+                //Dictionary.Clear();
+                Dictionary = DBHelper.GetAllTranslations();
+                CurrentTranslation = Dictionary.First();
+            }        
+        }
+
+        public void UpdateCurrentTranslation()
+        {
+            if(CurrentTranslation != null)
+            {
+                DBHelper.UpdateTranslation(CurrentTranslation);
+            }            
+        }
+
+        public void DeleteCurrentTranslation()
+        {
+            DBHelper.DeleteTranslation(CurrentTranslation.ID);
+            Dictionary.Remove(CurrentTranslation);
+            CurrentTranslation = null;
+        }
+
+        public void DeleteAllTranslations()
+        {
+            DBHelper.DeleteAllTranslations();
+            Dictionary.Clear();
+            CurrentTranslation = null;
+        }
+
+        public async void UpdateCurrentGoogleTranslation()
+        {
+            if(CurrentTranslation != null)
+            {
+                try
+                {
+                    string googleTrans = await GoogleTranslateService.Translate(CurrentTranslation.Term);
+
+                    CurrentTranslation.GoogleTranslation = googleTrans;
+                    UpdateCurrentTranslation();
+                }
+                catch
+                {
+                    Debug.WriteLine("Attempt to get Google Translation for " + CurrentTranslation.Term + " failed.");
+                }
+            }             
         }
 
         //Command Methods
 
-        private bool CanExecuteUpdateTranslation(object obj)
+        private bool CanExecuteAddNewTranslation(object parameter)
         {
-            return CurrentTranslation != null;
+            return parameter != null;
         }
-        public void ExecuteUpdateTranslation(object obj)
+        public void AddNewTranslation(object parameter)
         {
             DBHelper.UpdateTranslation(CurrentTranslation);
         }
 
-
-        private bool CanExecuteAddTranslation(object obj)
-        {
-            return true;
-        }
-        public void ExecuteAddNewTranslation(object obj)
-        {
-
-        }
     }
 }

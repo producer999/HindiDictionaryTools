@@ -32,7 +32,7 @@ namespace HindiDictionaryTools
                     
                 }
 
-                TranslationDataParser.ImportFromText();
+                //TranslationDataParser.ImportFromText();
 
                 return true;
             }

@@ -102,6 +102,8 @@ namespace HindiDictionaryTools
 
         }
 
+        //Constructor to use for importing translations from the text files
+
         public HindiTranslation(string term, string importTrans, string pos, string examples="")
         {
             _term = term;
@@ -110,6 +112,17 @@ namespace HindiDictionaryTools
             _importedTranslation = importTrans;
             _partOfSpeech = PartsOfSpeechConverter.ImportPartOfSpeechFromString(pos);
             _examples = examples;
+        }
+
+        //Constructor to use for manual translation entry
+
+        public HindiTranslation(string term, string userTrans)
+        {
+            _term = term;
+            _userTranslation = userTrans;
+            _googleTranslation = "";
+            _importedTranslation = "";
+            _partOfSpeech = PartsOfSpeech.Other;
         }
 
 

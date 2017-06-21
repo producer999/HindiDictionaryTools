@@ -11,7 +11,7 @@ namespace HindiDictionaryTools
 {
     public static class TranslationDataParser
     {
-        public static async void ImportFromText()
+        public static async Task<bool> ImportFromText()
         {
             try
             {
@@ -23,16 +23,16 @@ namespace HindiDictionaryTools
                 if (file != null)
                 {
                     await ParseTranslations(file);
-                    //return true;
+                    return true;
                 }
                 else
                 {
-                    //return false;
+                    return false;
                 }
             }
             catch
             {
-                //return false;
+                return false;
             }
         }
         
@@ -41,6 +41,71 @@ namespace HindiDictionaryTools
             var lines = await FileIO.ReadLinesAsync(file);
             List<string> importedList = lines.ToList<string>();
             List<string> errors = new List<string>();
+            int numErrors = 0;
+
+            foreach (var i in importedList)
+            {
+                Debug.WriteLine("PROCESSING: " + i);
+                Debug.WriteLine("");
+                string[] delimiters = { "[", "]\"", "]”", "]{}\"", "]{}”", "] {} \"", "\"(", "”(", "\" (", ")<", ") <", ">;" };
+                string[] data = i.Split(delimiters, StringSplitOptions.None);
+
+                string term, def, posstr, ex;
+                string[] pos;
+
+                if (data.Length == 6)
+                {
+
+                    term = data[1];
+
+                    if (!String.IsNullOrEmpty(data[2]))
+                        def = data[2];
+                    else
+                        def = "";
+
+                    pos = data[3].Split(new char[] { ',' });
+                    posstr = pos[0];
+
+                    if (!String.IsNullOrEmpty(data[5]))
+                        ex = data[5];
+                    else
+                        ex = "";
+
+                    DBHelper.Insert(new HindiTranslation(term, def, posstr, ex));
+                }
+
+                else
+                {
+                    numErrors++;
+                    errors.Add(i);
+                    errors.Add("");
+                    Debug.WriteLine("ERROR ON IMPORT - ADDED TO LOG");
+                    Debug.WriteLine("");
+                    for (int j = 0; j < data.Length; j++)
+                    {
+                        Debug.WriteLine("data " + j + ": " + data[j]);
+                        errors.Add("data " + j + ": " + data[j]);
+                    }
+                    errors.Add("");
+                }
+
+                Debug.WriteLine("");
+            }
+
+            errors.ForEach(y => Debug.WriteLine(y));
+
+            Debug.WriteLine("ALL DONE!");
+            Debug.WriteLine("Number of errors: " + numErrors);
+
+            return true;
+        }
+
+        private static async Task<bool> ParseTranslationsLong(StorageFile file)
+        {
+            var lines = await FileIO.ReadLinesAsync(file);
+            List<string> importedList = lines.ToList<string>();
+            List<string> errors = new List<string>();
+            int numErrors = 0;
 
             foreach (var i in importedList)
             {
@@ -75,6 +140,7 @@ namespace HindiDictionaryTools
 
                 else
                 {
+                    numErrors++;
                     errors.Add(i);
                     errors.Add("");
                     Debug.WriteLine("ERROR ON IMPORT - ADDED TO LOG");
@@ -93,8 +159,11 @@ namespace HindiDictionaryTools
             errors.ForEach(y => Debug.WriteLine(y));
 
             Debug.WriteLine("ALL DONE!");
+            Debug.WriteLine("Number of errors: " + numErrors);
 
             return true;
         }
+
+
     }
 }

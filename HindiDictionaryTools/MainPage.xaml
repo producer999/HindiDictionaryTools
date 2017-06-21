@@ -49,18 +49,22 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.00.05 6/14/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
-                <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-Yellow}" Header="Hindi Term"/>
-                <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-Yellow}" Header="Translation"/>
-                <Button Content="Add Translation" Margin="10" />
+                <TextBlock Text="Hindi Dictionary Tools v0.00.07 6/20/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"/>
+                <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-OffWhite}" Header="Translation"/>
+                <Button Content="Add Translation" Margin="10" Click="AddNewTranslation_Click" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"/>
+                <Button Content="Import From File" Margin="10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                        Click="{x:Bind CurrentDictionary.ImportTranslationsFromFile}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <TextBlock Text="" Margin="10"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="10" Text="Total Translations: " Foreground="{StaticResource SE-OffWhite}"/>
-                    <TextBlock Margin="10" Text="{Binding Dictionary.Count}" Foreground="{StaticResource SE-Yellow}"/>
+                    <TextBlock Margin="10" Text="{x:Bind CurrentDictionary.Dictionary.Count, Mode=OneWay}" Foreground="{StaticResource SE-Yellow}"/>
                 </StackPanel>
+                <Button Content="Clear Database" Margin="10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                        Click="{x:Bind CurrentDictionary.DeleteAllTranslations}"/>
             </StackPanel>
 
             <controls:GridSplitter Grid.Column="2" Width="4" VerticalAlignment="Stretch" 
@@ -83,26 +87,34 @@
 
                     <StackPanel Grid.Column="0" Orientation="Vertical">
                         <TextBlock Text="" Margin="10"/>
-                        <TextBox Name="CurrentTermField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"
-                                     Text="{Binding CurrentTranslation.Term, Mode=TwoWay}"/>
-                        <TextBox Name="CurrentImportedTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Translation"
-                                     Text="{Binding CurrentTranslation.ImportedTranslation, Mode=TwoWay}"/>
-                        <TextBox Name="CurrentUserTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="User Translation"
-                                     Text="{Binding CurrentTranslation.UserTranslation, Mode=TwoWay}"/>
+                        <TextBox Name="CurrentTermField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term" IsSpellCheckEnabled="False"
+                                     Text="{x:Bind CurrentDictionary.CurrentTranslation.Term, Mode=TwoWay}"/>
+                        <TextBox Name="CurrentImportedTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Translation" IsSpellCheckEnabled="False"
+                                     Text="{x:Bind CurrentDictionary.CurrentTranslation.ImportedTranslation, Mode=TwoWay}"/>
+                        <TextBox Name="CurrentUserTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="User Translation" IsSpellCheckEnabled="False"
+                                     Text="{x:Bind CurrentDictionary.CurrentTranslation.UserTranslation, Mode=TwoWay}"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Name="CurrentGoogleTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Google Translation"
-                                     Text="{Binding CurrentTranslation.GoogleTranslation, Mode=OneWay}"/>
-                            <Button Content="Refresh" Margin="10,38,10,10" />
+                            <TextBox Name="CurrentGoogleTranslationField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Google Translation" IsSpellCheckEnabled="False" IsReadOnly="True"
+                                     Text="{x:Bind CurrentDictionary.CurrentTranslation.GoogleTranslation, Mode=OneWay}"/>
+                            <Button Content="Refresh" Margin="10,38,10,10" Click="{x:Bind CurrentDictionary.UpdateCurrentGoogleTranslation}"
+                                    Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"/>
                         </StackPanel>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBlock Text="" Margin="10"/>
-                        <ComboBox Name ="posCombo" Margin="10" Header="Part of Speech" Foreground="{StaticResource SE-OffWhite}"
+                        <ComboBox Name="posCombo" Margin="10" Header="Part of Speech" Foreground="{StaticResource SE-OffWhite}"
                                   SelectedItem="{Binding CurrentTranslation.PartOfSpeech, Mode=TwoWay}">
                         </ComboBox>
-                        <Button Content="Update Translation" Margin="10" IsEnabled="True" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
-                                Command="{Binding UpdateTranslationCommand}"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Update" Margin="10" IsEnabled="True" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                Click="{x:Bind CurrentDictionary.UpdateCurrentTranslation}"/>
+                            <Button Content="Delete" Margin="10" IsEnabled="True" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                Click="{x:Bind CurrentDictionary.DeleteCurrentTranslation}"/>
+                        </StackPanel>
+                        
+                        
 
                     </StackPanel>
 
@@ -125,8 +137,8 @@
         <Grid Grid.Row="2">
 
             <toolkit:DataGrid x:Name="TranslationListView" Margin="10" SelectionMode="Single" HorizontalContentAlignment="Stretch" 
-                              ItemsSource="{Binding Dictionary}" SelectedItem="{Binding CurrentTranslation, Mode=TwoWay}"
-                              toolkit:DataGridExtensions.UseSingleSelectionAndDeselection="True"
+                              ItemsSource="{x:Bind CurrentDictionary.Dictionary, Mode=OneWay}" SelectedItem="{x:Bind CurrentDictionary.CurrentTranslation, Mode=TwoWay}"
+                              toolkit:DataGridExtensions.UseSingleSelectionAndDeselection="False"
                               HeaderBackground="Transparent" RowBackgroundOddBrush="#373737" RowBackgroundEvenBrush="#474747" FontFamily="Nirmala UI">
 
                 <toolkit:DataGrid.Columns>
