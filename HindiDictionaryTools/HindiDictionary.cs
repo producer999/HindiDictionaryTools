@@ -41,6 +41,21 @@ namespace HindiDictionaryTools
             }
         }
 
+        private bool _isCurrentTranslationSelected;
+        public bool IsCurrentTranslationSelected
+        {
+            get
+            {
+                _isCurrentTranslationSelected = CurrentTranslation != null;
+                return _isCurrentTranslationSelected;
+            }
+            set
+            {
+                _isCurrentTranslationSelected = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsCurrentTranslationSelected"));
+            }
+        }
+
         //Commands
 
         private DelegateCommand _addNewTranslationCommand;
@@ -58,23 +73,7 @@ namespace HindiDictionaryTools
 
         public HindiDictionary()
         {
-            /*
-            FileName = "HINDI_DB_DEFAULT";
-            DBHelper.CreateDatabase(FileName);
-
-            Dictionary = DBHelper.GetAllTranslations();
-
-            UpdateTranslationCommand = new DelegateCommand(ExecuteUpdateTranslation, CanExecuteUpdateTranslation);
-
-            if (Dictionary.Count == 0)
-            {
-                CurrentTranslation = null;
-            }
-            else
-            {
-                CurrentTranslation = Dictionary.First();
-            }
-            */
+     
         }
 
         public HindiDictionary(string fileName)
@@ -93,7 +92,7 @@ namespace HindiDictionaryTools
             else
             {
                 CurrentTranslation = Dictionary.First();
-               
+                IsCurrentTranslationSelected = true;
             }
         }
 
@@ -110,6 +109,9 @@ namespace HindiDictionaryTools
 
                 Dictionary.Add(newTranslation);
                 DBHelper.Insert(newTranslation);
+
+                CurrentTranslation = newTranslation;
+                IsCurrentTranslationSelected = true;
             }         
         }
 
@@ -117,9 +119,12 @@ namespace HindiDictionaryTools
         {
             if(await TranslationDataParser.ImportFromText())
             {
-                //Dictionary.Clear();
                 Dictionary = DBHelper.GetAllTranslations();
                 CurrentTranslation = Dictionary.First();
+                IsCurrentTranslationSelected = true;
+
+                //force PropertyChanged event on the Dictionary or it will not refresh in the ListView
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Dictionary"));
             }        
         }
 
@@ -133,9 +138,13 @@ namespace HindiDictionaryTools
 
         public void DeleteCurrentTranslation()
         {
-            DBHelper.DeleteTranslation(CurrentTranslation.ID);
-            Dictionary.Remove(CurrentTranslation);
-            CurrentTranslation = null;
+            if(CurrentTranslation != null)
+            {
+                DBHelper.DeleteTranslation(CurrentTranslation.ID);
+                Dictionary.Remove(CurrentTranslation);
+                CurrentTranslation = null;
+                IsCurrentTranslationSelected = false;
+            }     
         }
 
         public void DeleteAllTranslations()
@@ -143,6 +152,7 @@ namespace HindiDictionaryTools
             DBHelper.DeleteAllTranslations();
             Dictionary.Clear();
             CurrentTranslation = null;
+            IsCurrentTranslationSelected = false;
         }
 
         public async void UpdateCurrentGoogleTranslation()

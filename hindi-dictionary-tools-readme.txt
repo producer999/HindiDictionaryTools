@@ -20,27 +20,45 @@ https://stackoverflow.com/questions/23144519/gridview-with-2-columns-fill-width
 Coming Soon:
 
 ****fix funcionailty of part of speech ComboBox
-****fix listview binding on top right (doesnt show null values when deselecting translations)
 ****when pressing Enter in def entry fields, activate the Add Contact Button
 ****do a check on Add Contact that the Word is not in english, devanagari only
 ****store alternate definitions, alternate forms and examples as JSON in the databse
 ****add stop button during import that cancels the import where it is
 ****add timer to show how long an import took
 ****add button to get all google translations (maybe)
-****fix DataGrid does not populate after initial loading of app (database creation from text)
-	****calling Dictionary = GetAllTranslations does not update the listview binding
 ****get database to update all changes made automatially (add button?, do automatically?)
 ****find way to bind PartsOfSpeech enum to combobox ItemSource without using code behind
 ****find out why using x:Bind on an enum causes stack overflow
 ****find out if you can use x:Bind/x:DataType for items in DataGrid List
 ****replace code behind AddNewTranslation_Click event handler with MVVM implementation
+****try to improve import speed for main translation file (or break up file into smaller pieces)
+
+
+v 00.00.09 6/22/2017
+****fix listview binding on top right (doesnt show null values when deselecting translations)
 ****implement searching of the translation list (look up DataGrid.SetFilter)
+-bind Update, Delete and google Refresh buttons IsEnable bound to IsCurrentTranslationSelected property
+-make buttons look different for enabled and disabled and fix colors and text
+-added search box
+-implemented simple search functionality with a search button, cannot reset search results to "all" yet
+-make it so you can go back to showing all definitions by searching empty string
+****make pressing enter inside of search box trigger the search button
+****add a textblock that displayes the numbers of search results after searching
+****make call to automatically UpdateTranslation to databse when navigating away from a translation
+****update Parser to account for different types of verbs
 
 
 v 00.00.08 6/21/2017
-****parse the part of speech data to look for N(F) or N(M) and verb type
-****make buttons look different for enabled and disabled and fix colors and text
-****make call to automatically UpdateTranslation to databse when navigating away from a translation
+
+STATUS:
+-update button works
+-import button works
+-clear database button works
+
+-parse the part of speech data to look for N(F) or N(M) and verb type
+-fix DataGrid does not populating/updating after importing from text
+	-calling Dictionary = GetAllTranslations does not update the listview binding
+	-manually raised PropertyChagned event on Dictionary after import
 
 
 v 00.00.07 6/20/2017

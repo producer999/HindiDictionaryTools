@@ -64,7 +64,23 @@ namespace HindiDictionaryTools
                         def = "";
 
                     pos = data[3].Split(new char[] { ',' });
-                    posstr = pos[0];
+
+                    if(pos[0] == "N")
+                    {
+                        if (Array.IndexOf(pos, "F") != -1)
+                            posstr = "NF";
+
+                        else if (Array.IndexOf(pos, "M") != -1)
+                            posstr = "NM";
+
+                        else
+                            posstr = "N";
+                    }
+                    else
+                    {
+                        posstr = pos[0];
+                    }
+                    
 
                     if (!String.IsNullOrEmpty(data[5]))
                         ex = data[5];
