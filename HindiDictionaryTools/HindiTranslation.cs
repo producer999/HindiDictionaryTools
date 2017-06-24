@@ -78,8 +78,11 @@ namespace HindiDictionaryTools
             get { return _partOfSpeech; }
             set
             {
-                _partOfSpeech = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PartOfSpeech"));
+                if(_partOfSpeech != value)
+                {
+                    _partOfSpeech = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PartOfSpeech"));
+                }        
             }
         }
         public string Examples

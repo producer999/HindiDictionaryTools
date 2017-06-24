@@ -11,6 +11,7 @@ namespace HindiDictionaryTools
     public enum PartsOfSpeech
     {
         Other,
+        Noun,
         NounM,
         NounF,
         Verb,
@@ -22,7 +23,8 @@ namespace HindiDictionaryTools
         Pronoun,
         Conjunction,
         Interjection,
-        CaseMarker
+        CaseMarker,
+        IndependentClause
     }
 
     public class PartsOfSpeechConverter : IValueConverter
@@ -33,6 +35,8 @@ namespace HindiDictionaryTools
 
             switch (pos)
             {
+                case PartsOfSpeech.Noun:
+                    return "N";
                 case PartsOfSpeech.NounF:
                     return "N(F)";
                 case PartsOfSpeech.NounM:
@@ -57,6 +61,8 @@ namespace HindiDictionaryTools
                     return "POSTPN";
                 case PartsOfSpeech.CaseMarker:
                     return "CASE";
+                case PartsOfSpeech.IndependentClause:
+                    return "INDC";
                 default:
                     return "OTHER";
             }
@@ -69,7 +75,7 @@ namespace HindiDictionaryTools
             switch (pos)
             {
                 case "N":
-                    return PartsOfSpeech.NounF;
+                    return PartsOfSpeech.Noun;
                 case "N(F)":
                     return PartsOfSpeech.NounF;
                 case "N(M)":
@@ -94,6 +100,8 @@ namespace HindiDictionaryTools
                     return PartsOfSpeech.Postposition;
                 case "CASE":
                     return PartsOfSpeech.CaseMarker;
+                case "INDC":
+                    return PartsOfSpeech.IndependentClause;
                 case "OTHER":
                     return PartsOfSpeech.Other;
                 default:
@@ -106,7 +114,13 @@ namespace HindiDictionaryTools
             switch (pos)
             {
                 case "N":
-                    return PartsOfSpeech.NounF;
+                    return PartsOfSpeech.Noun;
+                case "ACRONYM":
+                    return PartsOfSpeech.Noun;
+                case "ABRV":
+                    return PartsOfSpeech.Noun;
+                case "ABBR":
+                    return PartsOfSpeech.Noun;
                 case "NF":
                     return PartsOfSpeech.NounF;
                 case "NM":
@@ -119,7 +133,17 @@ namespace HindiDictionaryTools
                     return PartsOfSpeech.VerbT;
                 case "ADV":
                     return PartsOfSpeech.Adverb;
+                case "ADV-PHRASE":
+                    return PartsOfSpeech.Adverb;
+                case "ADV-MAN":
+                    return PartsOfSpeech.Adverb;
                 case "ADJ":
+                    return PartsOfSpeech.Adjective;
+                case "ADJ-PHRASE":
+                    return PartsOfSpeech.Adjective;
+                case "ADJ-QUAL":
+                    return PartsOfSpeech.Adjective;
+                case "ADJ-DES-QUAL":
                     return PartsOfSpeech.Adjective;
                 case "PRON":
                     return PartsOfSpeech.Pronoun;
@@ -127,10 +151,22 @@ namespace HindiDictionaryTools
                     return PartsOfSpeech.Conjunction;
                 case "INTJ":
                     return PartsOfSpeech.Interjection;
+                case "INTJ-PHRASE":
+                    return PartsOfSpeech.Interjection;
                 case "POSTPOSTN":
+                    return PartsOfSpeech.Postposition;
+                case "PREP":
+                    return PartsOfSpeech.Postposition;
+                case "PREP-PHRASE":
                     return PartsOfSpeech.Postposition;
                 case "CASE-MARK":
                     return PartsOfSpeech.CaseMarker;
+                case "INDC":
+                    return PartsOfSpeech.IndependentClause;
+                case "INDC-PROVERB":
+                    return PartsOfSpeech.IndependentClause;
+                case "INDC-IMPERATIVE":
+                    return PartsOfSpeech.IndependentClause;
                 default:
                     return PartsOfSpeech.Other;
             }

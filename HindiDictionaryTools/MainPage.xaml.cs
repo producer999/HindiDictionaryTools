@@ -28,18 +28,28 @@ namespace HindiDictionaryTools
 
         public HindiDictionary CurrentDictionary { get; set; }
 
-        private bool _isAddTranslationEnabled;
-        public bool IsAddTranslationEnabled
+        private string _currentSearchFilter;
+        public string CurrentSearchFilter
         {
-            get
-            {
-                _isAddTranslationEnabled = !String.IsNullOrWhiteSpace(NewTermEntryField.Text);
-                return _isAddTranslationEnabled;
-            }
+            get { return _currentSearchFilter; }
             set
             {
-                _isAddTranslationEnabled = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsAddTranslationEnabled"));
+                _currentSearchFilter = value;
+                if (!String.IsNullOrWhiteSpace(_currentSearchFilter))
+                {
+                    TranslationListView.SetFilter<HindiTranslation>(t =>
+                        t.Term.Contains(_currentSearchFilter) ||
+                        t.ImportedTranslation.ToLower().Contains(_currentSearchFilter.ToLower()) ||
+                        t.UserTranslation.ToLower().Contains(_currentSearchFilter.ToLower()) ||
+                        t.GoogleTranslation.ToLower().Contains(_currentSearchFilter.ToLower()) 
+                        
+                        );
+                }
+                else
+                {
+                    TranslationListView.RemoveFilter();
+                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentSearchFilter"));
             }
         }
 
@@ -50,7 +60,7 @@ namespace HindiDictionaryTools
             CurrentDictionary = new HindiDictionary("HINDI_DB_01");
 
             var _posEnum = Enum.GetValues(typeof(PartsOfSpeech)).Cast<PartsOfSpeech>();
-            posCombo.ItemsSource = _posEnum.ToList();
+            PartOfSpeechSelector.ItemsSource = _posEnum.ToList();
         }
 
         private void AddNewTranslation_Click(object sender, RoutedEventArgs e)
@@ -58,44 +68,6 @@ namespace HindiDictionaryTools
             CurrentDictionary.AddNewTranslation(NewTermEntryField.Text, NewTranslationEntryField.Text);
             NewTermEntryField.Text = "";
             NewTranslationEntryField.Text = "";
-        }
-
-        private void Search_Clicked(object sender, RoutedEventArgs e)
-        {
-            if(!String.IsNullOrWhiteSpace(SearchBox.Text))
-            {
-                TranslationListView.SetFilter<HindiTranslation>(t =>
-                    t.Term.Contains(SearchBox.Text) ||
-                    t.ImportedTranslation.ToLower().Contains(SearchBox.Text.ToLower()) ||
-                    t.UserTranslation.ToLower().Contains(SearchBox.Text.ToLower()) ||
-                    t.GoogleTranslation.ToLower().Contains(SearchBox.Text.ToLower())
-                    );
-            }
-            else
-            {
-                TranslationListView.RemoveFilter();
-            }
-        }
-
-        //
-        //Used to accept the Enter key in the Search Box to trigger the Search Button
-        //NOT working possibly delete...
-        private void SearchBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if(e.Key == Windows.System.VirtualKey.Enter)
-            {
-                Search_Clicked(this, new RoutedEventArgs());
-                e.Handled = true;
-            }    
-        }
-
-        protected override void OnKeyDown(KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                Search_Clicked(this, new RoutedEventArgs());
-            }
-            base.OnKeyDown(e);
         }
     }
 }

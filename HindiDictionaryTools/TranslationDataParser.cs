@@ -76,6 +76,15 @@ namespace HindiDictionaryTools
                         else
                             posstr = "N";
                     }
+                    else if(pos[0] == "V")
+                    {
+                        if (Array.IndexOf(pos, "VINT") != -1)
+                            posstr = "VINT";
+                        else if (Array.IndexOf(pos, "vint") != -1)
+                            posstr = "VINT";
+                        else
+                            posstr = "V";
+                    }
                     else
                     {
                         posstr = pos[0];

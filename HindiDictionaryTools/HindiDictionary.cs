@@ -37,6 +37,7 @@ namespace HindiDictionaryTools
             set
             {
                 _currentTranslation = value;
+                IsCurrentTranslationSelected = true;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentTranslation"));
             }
         }

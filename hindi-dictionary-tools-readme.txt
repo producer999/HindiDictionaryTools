@@ -15,37 +15,47 @@ http://bsubramanyamraju.blogspot.in/2016/12/windows-10-uwp-sqlite-how-to-store-d
 http://www.cfilt.iitb.ac.in/~hdict/webinterface_user/index.php
 http://www.c-sharpcorner.com/UploadFile/2b876a/consume-web-service-using-httpclient-to-post-and-get-json-da/
 https://stackoverflow.com/questions/23144519/gridview-with-2-columns-fill-width
-
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/f02f3880-f8b8-4e35-95bb-2646ce2e5d0c/uwp-binding-listviewselecteditem-with-xbind-twoway-mode-causes-stackoverflowexception?forum=wpdevelop
+https://codeblog.jonskeet.uk/2015/01/30/clean-event-handlers-invocation-with-c-6/
 
 Coming Soon:
 
-****fix funcionailty of part of speech ComboBox
 ****when pressing Enter in def entry fields, activate the Add Contact Button
-****do a check on Add Contact that the Word is not in english, devanagari only
 ****store alternate definitions, alternate forms and examples as JSON in the databse
 ****add stop button during import that cancels the import where it is
 ****add timer to show how long an import took
 ****add button to get all google translations (maybe)
-****get database to update all changes made automatially (add button?, do automatically?)
 ****find way to bind PartsOfSpeech enum to combobox ItemSource without using code behind
-****find out why using x:Bind on an enum causes stack overflow
 ****find out if you can use x:Bind/x:DataType for items in DataGrid List
 ****replace code behind AddNewTranslation_Click event handler with MVVM implementation
 ****try to improve import speed for main translation file (or break up file into smaller pieces)
+****fix listview binding on top right (doesnt show empty values for null current translation)
+****add a textblock that displayes the numbers of search results after searching
+****make call to automatically UpdateTranslation to databse when navigating away from a translation
+****put upper left section in a ScrollViewer
+****improve load time when many translations are in the database
+****get database to update all changes made automatially (add button?, do automatically?)
+
+
+v 00.00.10 6/23/2017
+-made search string automatically filter the list using two way binding on a property which sets the DataGrid filter
+-added Noun (not M or F) as a Part of Speech
+-ComboBox x:Bind is now working TwoWay, stack overflow was casue by infinite loop of property keep setting itself
+	-needed to set a check on the PartOfSpeech Property on the Translation to only update if value != currentVal
+-current translation automatically update in database when new POS selection is made
+-update Parser to account for different types of verbs
+-added parsing for Independent Clause, Adjective phrase, Adverb phrase, Preposition (=postposition)
+-added new parsing information to improve part of speech detection
 
 
 v 00.00.09 6/22/2017
-****fix listview binding on top right (doesnt show null values when deselecting translations)
-****implement searching of the translation list (look up DataGrid.SetFilter)
+
+
 -bind Update, Delete and google Refresh buttons IsEnable bound to IsCurrentTranslationSelected property
 -make buttons look different for enabled and disabled and fix colors and text
 -added search box
--implemented simple search functionality with a search button, cannot reset search results to "all" yet
+-implemented simple search functionality with a search button using DataGrid.SetFilter
 -make it so you can go back to showing all definitions by searching empty string
-****make pressing enter inside of search box trigger the search button
-****add a textblock that displayes the numbers of search results after searching
-****make call to automatically UpdateTranslation to databse when navigating away from a translation
-****update Parser to account for different types of verbs
 
 
 v 00.00.08 6/21/2017
