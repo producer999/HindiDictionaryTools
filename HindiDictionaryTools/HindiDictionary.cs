@@ -9,16 +9,6 @@ using System.Threading.Tasks;
 
 namespace HindiDictionaryTools
 {
-    public enum SortStatus
-    {
-        SortByIdAscend,
-        SortByIdDescend,
-        SortByTermAscend,
-        SortByTermDescend,
-        SortByTransAscend,
-        SortByTransDescend
-    }
-
     public class HindiDictionary : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -57,19 +47,6 @@ namespace HindiDictionaryTools
             }
         }
 
-        //Commands
-
-        private DelegateCommand _addNewTranslationCommand;
-        public DelegateCommand AddNewTranslationCommand
-        {
-            get { return _addNewTranslationCommand; }
-            set
-            {
-                _addNewTranslationCommand = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AddNewTranslationCommand"));
-            }
-        }
-
         //Constructors
 
         public HindiDictionary()
@@ -83,8 +60,6 @@ namespace HindiDictionaryTools
             DBHelper.CreateDatabase(FileName);
 
             Dictionary = DBHelper.GetAllTranslations();
-
-            AddNewTranslationCommand = new DelegateCommand(AddNewTranslation, CanExecuteAddNewTranslation);
 
             if (Dictionary.Count == 0)
             {
@@ -173,17 +148,5 @@ namespace HindiDictionaryTools
                 }
             }             
         }
-
-        //Command Methods
-
-        private bool CanExecuteAddNewTranslation(object parameter)
-        {
-            return parameter != null;
-        }
-        public void AddNewTranslation(object parameter)
-        {
-            DBHelper.UpdateTranslation(CurrentTranslation);
-        }
-
     }
 }

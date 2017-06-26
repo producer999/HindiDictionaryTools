@@ -24,8 +24,11 @@ namespace HindiDictionaryTools
             get { return _term; }
             set
             {
-                _term = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Term"));
+                if(_term != value)
+                {
+                    _term = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Term"));
+                }    
             }
         }
         public string UserTranslation
@@ -33,8 +36,11 @@ namespace HindiDictionaryTools
             get { return _userTranslation; }
             set
             {
-                _userTranslation = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserTranslation"));
+                if(_userTranslation != value)
+                {
+                    _userTranslation = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserTranslation"));
+                }            
             }
         }
         public string GoogleTranslation
@@ -42,8 +48,11 @@ namespace HindiDictionaryTools
             get { return _googleTranslation; }
             set
             {
-                _googleTranslation = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("GoogleTranslation"));
+                if(_googleTranslation != value)
+                {
+                    _googleTranslation = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("GoogleTranslation"));
+                }             
             }
         }
         public string ImportedTranslation
@@ -51,8 +60,11 @@ namespace HindiDictionaryTools
             get { return _importedTranslation; }
             set
             {
-                _importedTranslation = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ImportedTranslation"));
+                if(_importedTranslation != value)
+                {
+                    _importedTranslation = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ImportedTranslation"));
+                }             
             }
         }
         public string AltTranslations
@@ -60,8 +72,11 @@ namespace HindiDictionaryTools
             get { return _altTranslations; }
             set
             {
-                _altTranslations = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AltTranslations"));
+                if(_altTranslations != value)
+                {
+                    _altTranslations = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AltTranslations"));
+                }       
             }
         }
         public string AltForms
@@ -69,8 +84,11 @@ namespace HindiDictionaryTools
             get { return _altForms; }
             set
             {
-                _altForms = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AltForms"));
+                if(_altForms != value)
+                {
+                    _altForms = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AltForms"));
+                }      
             }
         }
         public PartsOfSpeech PartOfSpeech
@@ -90,14 +108,14 @@ namespace HindiDictionaryTools
             get { return _examples; }
             set
             {
-                _examples = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Examples"));
+                if(_examples != value)
+                {
+                    _examples = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Examples"));
+                }            
             }
         }
-        
-
-     
-
+ 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public HindiTranslation()
