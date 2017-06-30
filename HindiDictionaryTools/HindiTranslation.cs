@@ -69,7 +69,8 @@ namespace HindiDictionaryTools
         }
         public string AltTranslations
         {
-            get { return _altTranslations; }
+            get
+            { return _altTranslations; }
             set
             {
                 if(_altTranslations != value)
@@ -81,7 +82,8 @@ namespace HindiDictionaryTools
         }
         public string AltForms
         {
-            get { return _altForms; }
+            get
+            { return _altForms; }
             set
             {
                 if(_altForms != value)
@@ -105,7 +107,8 @@ namespace HindiDictionaryTools
         }
         public string Examples
         {
-            get { return _examples; }
+            get
+            { return _examples; }
             set
             {
                 if(_examples != value)
@@ -146,7 +149,50 @@ namespace HindiDictionaryTools
             _partOfSpeech = PartsOfSpeech.Other;
         }
 
+    }
 
+    public class TranslationAltForm
+    {
+        public string[] altForms;
 
+        public TranslationAltForm()
+        {
+            altForms = new string[] { };
+        }
+
+        public TranslationAltForm(string[] forms)
+        {
+            altForms = forms;
+        }
+    }
+
+    public class TranslationExamples
+    {
+        public string[] examples;
+
+        public TranslationExamples()
+        {
+            examples = new string[] { };
+        }
+
+        public TranslationExamples(string[] examples)
+        {
+            this.examples = examples;
+        }
+    }
+
+    public class TranslationAltTranslations
+    {
+        public string[] altTrans;
+
+        public TranslationAltTranslations()
+        {
+            altTrans = new string[] { };
+        }
+
+        public TranslationAltTranslations(string[] trans)
+        {
+            altTrans = trans;
+        }
     }
 }

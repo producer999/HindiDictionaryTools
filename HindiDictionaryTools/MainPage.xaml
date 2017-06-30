@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:toolkit="using:MyToolkit.Controls"
+    xmlns:sf="using:Syncfusion.UI.Xaml.Grid"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -29,6 +29,26 @@
         </Style>
 
         <local:PartsOfSpeechConverter x:Key="POSConverter"/>
+        <local:ExamplesConverter x:Key="ExamplesConverter"/>
+
+        <Style TargetType="sf:GridCell">
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource SE-OffWhite}" />
+        </Style>
+        <Style x:Key="customRowStyle" TargetType="sf:VirtualizingCellsControl">
+            <Setter Property="Background" Value="#373737" />
+        </Style>
+        <Style x:Key="alternatingRowStyle" TargetType="sf:VirtualizingCellsControl">
+            <Setter Property="Background" Value="#474747" />
+        </Style>
+        <Style x:Key="headerStyle" TargetType="sf:GridHeaderCellControl">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="Nirmala UI" />
+            <Setter Property="Background" Value="{StaticResource SE-DarkGray}" />
+            <Setter Property="Foreground" Value="{StaticResource SE-Yellow}" />
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
 
     </Page.Resources>
     
@@ -49,7 +69,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.00.10 6/23/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.01.03 6/29/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
                 <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"/>
                 <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-OffWhite}" Header="Translation"/>
                 <Button Content="Add Translation" Margin="10" Click="AddNewTranslation_Click" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"/>
@@ -102,6 +122,25 @@
                             <Button Content="Refresh" Margin="10,38,10,10" Click="{x:Bind CurrentDictionary.UpdateCurrentGoogleTranslation}" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
                                     Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"/>
                         </StackPanel>
+                      
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="NewExampleTextBox"  Header="Examples" Margin="10" Width="200" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}"
+                                     IsSpellCheckEnabled="False"/>
+                            <Button Content="Add" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                    IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"/>
+                        </StackPanel>
+                        <ListView Margin="10" ItemsSource="{x:Bind CurrentDictionary.CurrentTranslation.Examples, Mode=OneWay, Converter={StaticResource ExamplesConverter}}"
+                                  Width="325" HorizontalAlignment="Left" Background="#373737" SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <RelativePanel Width="325">
+                                        <TextBlock Name="ExampleText" RelativePanel.AlignLeftWithPanel="True" Margin="0,7,0,0" Text="{Binding}" Foreground="{StaticResource SE-OffWhite}"></TextBlock>
+                                        <Button RelativePanel.AlignRightWithPanel="True" Margin="0,0,25,0" Content="X" Foreground="{StaticResource SE-OffWhite}" FontWeight="Bold"></Button>
+                                    </RelativePanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Vertical">
@@ -120,9 +159,9 @@
                                 Click="{x:Bind CurrentDictionary.DeleteCurrentTranslation}"/>
                         </StackPanel>
 
-                        
-                        
-                        
+    
+
+
                     </StackPanel>
 
                 </Grid>
@@ -151,53 +190,30 @@
             <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <TextBlock Text="Search" Padding="10,15,0,0" FontWeight="Bold" Foreground="{StaticResource SE-Yellow}"/>
                 <AutoSuggestBox Name="SearchBox" PlaceholderText="Search Translations" Margin="10" Width="400"
-                                Text="{x:Bind CurrentSearchFilter, Mode=TwoWay}" QueryIcon="Find"/>
+                                TextChanged="Search_TextChanged" QueryIcon="Find"/>
                 <TextBlock Margin="10" Foreground="{StaticResource SE-Yellow}"/>
             </StackPanel>
-            
-            <toolkit:DataGrid x:Name="TranslationListView" Margin="10" Grid.Row="1" SelectionMode="Single" HorizontalContentAlignment="Stretch" 
-                              ItemsSource="{x:Bind CurrentDictionary.Dictionary, Mode=OneWay}" SelectedItem="{x:Bind CurrentDictionary.CurrentTranslation, Mode=TwoWay}"
-                              toolkit:DataGridExtensions.UseSingleSelectionAndDeselection="False"
-                              HeaderBackground="Transparent" RowBackgroundOddBrush="#373737" RowBackgroundEvenBrush="#474747" FontFamily="Nirmala UI">
 
-                <toolkit:DataGrid.Columns>
+            <sf:SfDataGrid x:Name="TranslationGrid" Grid.Row="1" Margin="10" RowStyle="{StaticResource customRowStyle}" AlternatingRowStyle="{StaticResource alternatingRowStyle}"
+                       RowSelectionBrush="#edce09" SelectionForegroundBrush="{StaticResource SE-DarkGray}" HeaderStyle="{StaticResource headerStyle}" BorderThickness="0"
+                       ItemsSource="{x:Bind CurrentDictionary.Dictionary, Mode=OneWay}"
+                       SelectedItem="{x:Bind CurrentDictionary.CurrentTranslation, Mode=TwoWay}"
+                       AutoGenerateColumns="False"
+                       AllowResizingColumns="True"
+                       ShowBusyIndicator="True"
+                       EnableDataVirtualization="True"
+                       ColumnSizer="Star"
+                       NavigationMode="Row">
+                <sf:SfDataGrid.Columns>
+                    <sf:GridTextColumn MappingName="Term" HeaderText="dismyk"/>
+                    <sf:GridTextColumn MappingName="ImportedTranslation"/>
+                    <sf:GridTextColumn MappingName="UserTranslation"/>
+                    <sf:GridTextColumn MappingName="GoogleTranslation"/>
+                    <sf:GridTextColumn DisplayBinding="{Binding PartOfSpeech, Converter={StaticResource POSConverter}}"/>
+                </sf:SfDataGrid.Columns>
 
-                    <toolkit:DataGridTextColumn Width="2*" Binding="{Binding Term}" IsAscendingDefault="True" Foreground="{StaticResource SE-OffWhite}">
-                        <toolkit:DataGridTextColumn.Header>
-                            <TextBlock Text="Term" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
-                        </toolkit:DataGridTextColumn.Header>
-                    </toolkit:DataGridTextColumn>
+            </sf:SfDataGrid>
 
-                    <toolkit:DataGridTextColumn Width="2*" Binding="{Binding ImportedTranslation}" IsAscendingDefault="False" Foreground="{StaticResource SE-OffWhite}">
-                        <toolkit:DataGridTextColumn.Header>
-                            <TextBlock Text="Translation" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
-                        </toolkit:DataGridTextColumn.Header>
-                    </toolkit:DataGridTextColumn>
-
-                    <toolkit:DataGridTextColumn Width="2*" Binding="{Binding UserTranslation}" IsAscendingDefault="False" Foreground="{StaticResource SE-OffWhite}">
-                        <toolkit:DataGridTextColumn.Header>
-                            <TextBlock Text="User Translation" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
-                        </toolkit:DataGridTextColumn.Header>
-                    </toolkit:DataGridTextColumn>
-
-                    <toolkit:DataGridTextColumn Width="2*" Binding="{Binding GoogleTranslation}" IsAscendingDefault="False" Foreground="{StaticResource SE-OffWhite}">
-                        <toolkit:DataGridTextColumn.Header>
-                            <TextBlock Text="Google Translation" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
-                        </toolkit:DataGridTextColumn.Header>
-                    </toolkit:DataGridTextColumn>
-
-                    <toolkit:DataGridTextColumn Width="1*" Binding="{Binding PartOfSpeech, Converter={StaticResource POSConverter}}" IsAscendingDefault="False" Foreground="{StaticResource SE-OffWhite}">
-                        <toolkit:DataGridTextColumn.Header>
-                            <TextBlock Text="PoS" Foreground="{StaticResource SE-Yellow}" FontSize="14" FontFamily="Nirmala UI"/>
-                        </toolkit:DataGridTextColumn.Header>
-                    </toolkit:DataGridTextColumn>
-
-                </toolkit:DataGrid.Columns>
-              
-            </toolkit:DataGrid>
-            
-            
-            
         </Grid>
         
     </Grid>

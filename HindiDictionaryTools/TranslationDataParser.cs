@@ -51,7 +51,8 @@ namespace HindiDictionaryTools
                 string[] data = i.Split(delimiters, StringSplitOptions.None);
 
                 string term, def, posstr, ex;
-                string[] pos;
+                string[] pos, exArr;
+                TranslationExamples e;
 
                 if (data.Length == 6)
                 {
@@ -92,7 +93,13 @@ namespace HindiDictionaryTools
                     
 
                     if (!String.IsNullOrEmpty(data[5]))
-                        ex = data[5];
+                    {
+                        exArr = new string[] { data[5] };
+                        e = new TranslationExamples(exArr);
+
+                        ex = Newtonsoft.Json.JsonConvert.SerializeObject(e);
+                    }
+                        
                     else
                         ex = "";
 

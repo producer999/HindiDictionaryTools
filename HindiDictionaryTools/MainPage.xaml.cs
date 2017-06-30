@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using MyToolkit.Controls;
 using System.ComponentModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -22,45 +21,37 @@ namespace HindiDictionaryTools
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class MainPage : Page
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public HindiDictionary CurrentDictionary { get; set; }
 
         private string _currentSearchFilter;
-        public string CurrentSearchFilter
-        {
-            get { return _currentSearchFilter; }
-            set
-            {
-                _currentSearchFilter = value;
-                if (!String.IsNullOrWhiteSpace(_currentSearchFilter))
-                {
-                    TranslationListView.SetFilter<HindiTranslation>(t =>
-                        t.Term.Contains(_currentSearchFilter) ||
-                        t.ImportedTranslation.ToLower().Contains(_currentSearchFilter.ToLower()) ||
-                        t.UserTranslation.ToLower().Contains(_currentSearchFilter.ToLower()) ||
-                        t.GoogleTranslation.ToLower().Contains(_currentSearchFilter.ToLower()) 
-                        
-                        );
-                }
-                else
-                {
-                    TranslationListView.RemoveFilter();
-                }
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentSearchFilter"));
-            }
-        }
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            CurrentDictionary = new HindiDictionary("HINDI_DB_01");
+            CurrentDictionary = new HindiDictionary("HINDI_DB_01_LG");
 
             var _posEnum = Enum.GetValues(typeof(PartsOfSpeech)).Cast<PartsOfSpeech>();
             PartOfSpeechSelector.ItemsSource = _posEnum.ToList();
+        }
+
+        public bool SearchFilter(Object o)
+        {
+            var t = o as HindiTranslation;
+
+            if (t.Term.Contains(_currentSearchFilter) ||
+                        t.ImportedTranslation.ToLower().Contains(_currentSearchFilter.ToLower()) ||
+                        t.UserTranslation.ToLower().Contains(_currentSearchFilter.ToLower()) ||
+                        t.GoogleTranslation.ToLower().Contains(_currentSearchFilter.ToLower()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void AddNewTranslation_Click(object sender, RoutedEventArgs e)
@@ -69,5 +60,13 @@ namespace HindiDictionaryTools
             NewTermEntryField.Text = "";
             NewTranslationEntryField.Text = "";
         }
+
+        private void Search_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            _currentSearchFilter = sender.Text;
+            TranslationGrid.View.Filter = SearchFilter;
+            TranslationGrid.View.RefreshFilter();
+        }
+
     }
 }

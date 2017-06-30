@@ -26,15 +26,41 @@ Coming Soon:
 ****add timer to show how long an import took
 ****add button to get all google translations (maybe)
 ****find way to bind PartsOfSpeech enum to combobox ItemSource without using code behind
-****find out if you can use x:Bind/x:DataType for items in DataGrid List
 ****replace code behind AddNewTranslation_Click event handler with MVVM implementation
-****try to improve import speed for main translation file (or break up file into smaller pieces)
 ****fix listview binding on top right (doesnt show empty values for null current translation)
 ****add a textblock that displayes the numbers of search results after searching
 ****make call to automatically UpdateTranslation to databse when navigating away from a translation
 ****put upper left section in a ScrollViewer
-****improve load time when many translations are in the database
 ****get database to update all changes made automatially (add button?, do automatically?)
+****add Copy Database button to make a copy of the dataase on the desktop (or chosen location)
+****make POS column smaller than rest
+****make import translation and term columns a little longer than the rest
+****fix the header text titles
+
+
+v 00.01.04 6/30/2017
+-changed Examples converter to convert from JSON to List<string>
+-Created listview with example and X button for deleting element from the list (button not implemented yet)
+-added entry textbox and Add button for adding new examples
+-styled and positioned examples elements
+
+
+v 00.01.03 6/29/2017
+-added examples, altforms and alt translations JSON wrapper objects
+-added examples, altforms and alt translations converter classes (convert from JSON to string, convertback str to JSON)
+-changed translation data parser to import examples from files as JSON with string array in it
+-added examples field and tested with 1 way binding (converback not done yet)
+
+
+v 00.01.02 6/28/2017
+-added classes for alttrans, altforms and examples JSON
+
+
+v 00.01.01 6/27/2017
+-switched from using the MyToolKit.Extended.DataGrid to the SyncFusion SfDataGrid, this fixed:
+	-Data Virtualization: 136,000+ translations now load in about 6 seconds
+	-Data Virtualization: adding 10,000+ translations to a large database no longer crashes/hangs the app
+-added the following features to SfDataGrid: search, style/colors, sort
 
 
 v 00.00.10 6/23/2017
