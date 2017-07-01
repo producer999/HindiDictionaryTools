@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,23 +14,30 @@ namespace HindiDictionaryTools
         {
             string data = (string)value;
 
-            TranslationAltTranslations t = Newtonsoft.Json.JsonConvert.DeserializeObject<TranslationAltTranslations>(data);
-
-            string output = "";
-
-            for (int i = 0; i < t.altTrans.Length; i++)
+            if(String.IsNullOrWhiteSpace(data))
             {
-                output += t.altTrans[i];
-
-                if(i != t.altTrans.Length-1)
-                    output += ", ";
+                return new ObservableCollection<string>();
             }
-            return output;
+            else
+            {
+                TranslationAltTranslations t = Newtonsoft.Json.JsonConvert.DeserializeObject<TranslationAltTranslations>(data);
+
+                ObservableCollection<string> output = new ObservableCollection<string>();
+
+                for (int i = 0; i < t.altTrans.Length; i++)
+                {
+                    output.Add(t.altTrans[i]);
+                }
+                return output;
+            }   
         }
 
+        //
+        // This ConvertBack() method is never called with TwoWay Binding... it doesn't work for now
+        // See readme for more info
+        //
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            //string data = (string)value;
             return value;
         }
     }
@@ -40,20 +48,28 @@ namespace HindiDictionaryTools
         {
             string data = (string)value;
 
-            TranslationAltForm af = Newtonsoft.Json.JsonConvert.DeserializeObject<TranslationAltForm>(data);
-
-            string output = "";
-
-            for (int i = 0; i < af.altForms.Length; i++)
+            if (String.IsNullOrWhiteSpace(data))
             {
-                output += af.altForms[i];
-
-                if(i != af.altForms.Length-1)
-                    output += ", ";
+                return new ObservableCollection<string>();
             }
-            return output;
+            else
+            {
+                TranslationAltForm af = Newtonsoft.Json.JsonConvert.DeserializeObject<TranslationAltForm>(data);
+
+                ObservableCollection<string> output = new ObservableCollection<string>();
+
+                for (int i = 0; i < af.altForms.Length; i++)
+                {
+                    output.Add(af.altForms[i]);
+                }
+                return output;
+            }           
         }
 
+        //
+        // This ConvertBack() method is never called with TwoWay Binding... it doesn't work for now
+        // See readme for more info
+        //
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return value;
@@ -66,31 +82,50 @@ namespace HindiDictionaryTools
         {
             string data = (string)value;
 
-            TranslationExamples e = Newtonsoft.Json.JsonConvert.DeserializeObject<TranslationExamples>(data);
-
-            //string output = "";
-
-            //for (int i = 0; i < e.examples.Length; i++)
-            //{
-            //    output += e.examples[i];
-
-            //    if(i != e.examples.Length-1)
-            //        output += ", ";
-            //}
-            //return output;
-
-            List<string> output = new List<string>();
-
-            for (int i = 0; i < e.examples.Length; i++)
+            if (String.IsNullOrWhiteSpace(data))
             {
-                output.Add(e.examples[i]);
+                return new ObservableCollection<string>();
             }
-            return output;
+            else
+            {
+                TranslationExamples e = Newtonsoft.Json.JsonConvert.DeserializeObject<TranslationExamples>(data);
+
+                ObservableCollection<string> output = new ObservableCollection<string>();
+
+                for (int i = 0; i < e.examples.Length; i++)
+                {
+                    output.Add(e.examples[i]);
+                }
+                return output;
+            }          
         }
 
+        //
+        // This ConvertBack() method is never called with TwoWay Binding... it doesn't work for now
+        // See readme for more info
+        //
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return value;
+
+            var data = value as ObservableCollection<string>;
+            string output = "";
+
+            output += "{ \"examples\": [ ";
+
+            if(data.Count > 0)
+            {
+                for(int i=0; i<data.Count; i++)
+                {
+                    output += "\"" + data[i] + "\"";
+                    if(i != data.Count-1)
+                    {
+                        output += ", ";
+                    }
+                }
+            }
+
+            output += " ]}";           
+            return output;
         }
     }
 }

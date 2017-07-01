@@ -148,5 +148,71 @@ namespace HindiDictionaryTools
                 }
             }             
         }
+
+        public string ExampleCollectionToJSON(ObservableCollection<string> data)
+        {
+            string output = "";
+
+            output += "{ \"examples\": [ ";
+
+            if (data.Count > 0)
+            {
+                for (int i = 0; i < data.Count; i++)
+                {
+                    output += "\"" + data[i] + "\"";
+                    if (i != data.Count - 1)
+                    {
+                        output += ", ";
+                    }
+                }
+            }
+
+            output += " ]}";
+            return output;
+        }
+
+        public string AltTransCollectionToJSON(ObservableCollection<string> data)
+        {
+            string output = "";
+
+            output += "{ \"altTrans\": [ ";
+
+            if (data.Count > 0)
+            {
+                for (int i = 0; i < data.Count; i++)
+                {
+                    output += "\"" + data[i] + "\"";
+                    if (i != data.Count - 1)
+                    {
+                        output += ", ";
+                    }
+                }
+            }
+
+            output += " ]}";
+            return output;
+        }
+
+        public string AltFormsCollectionToJSON(ObservableCollection<string> data)
+        {
+            string output = "";
+
+            output += "{ \"altForms\": [ ";
+
+            if (data.Count > 0)
+            {
+                for (int i = 0; i < data.Count; i++)
+                {
+                    output += "\"" + data[i] + "\"";
+                    if (i != data.Count - 1)
+                    {
+                        output += ", ";
+                    }
+                }
+            }
+
+            output += " ]}";
+            return output;
+        }
     }
 }

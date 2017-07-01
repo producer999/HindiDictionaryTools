@@ -20,22 +20,37 @@ https://codeblog.jonskeet.uk/2015/01/30/clean-event-handlers-invocation-with-c-6
 
 Coming Soon:
 
-****when pressing Enter in def entry fields, activate the Add Contact Button
-****store alternate definitions, alternate forms and examples as JSON in the databse
+****when pressing Enter in def/examples/alt trans/alt forms entry fields, activate the Add Button
 ****add stop button during import that cancels the import where it is
 ****add timer to show how long an import took
-****add button to get all google translations (maybe)
-****find way to bind PartsOfSpeech enum to combobox ItemSource without using code behind
-****replace code behind AddNewTranslation_Click event handler with MVVM implementation
 ****fix listview binding on top right (doesnt show empty values for null current translation)
 ****add a textblock that displayes the numbers of search results after searching
-****make call to automatically UpdateTranslation to databse when navigating away from a translation
-****put upper left section in a ScrollViewer
-****get database to update all changes made automatially (add button?, do automatically?)
+****make call to automatically UpdateTranslation to databse when navigating away from a translation (improve)
+****get database to update all changes made automatially (add button?, do automatically?) (improve)
 ****add Copy Database button to make a copy of the dataase on the desktop (or chosen location)
-****make POS column smaller than rest
-****make import translation and term columns a little longer than the rest
-****fix the header text titles
+****add a "Favorite" or "starred" translation attribute to the translation itself that can be used to promote it
+****add splash screen
+****fix copy past from pdf doesnt show a hindi font
+
+
+v 00.03.00 7/1/2017
+-finished designing the look of the Examples editor ListView
+-examples listview now functional to update the examples proerty on the Current Translation
+	-had to write a helper function in the hindidictionary class to "convert back" the collection to the JSON
+	-future: figure out how to get this to happen automatically using the converter class
+-adjusted alt trans and alt forms converters to use the observable collection return type
+-checked for null values on all converters
+-fix the header text titles
+-added the Alt Translations editor
+-fixed example editor items template so that long sentences dont overlap the delete button
+-changed alt translation editor to use a GridView instead of listview
+-changed alt trans gridview to use a WrapPanel (uwp toolkit) as its itemspaneltemplate to support variable width items
+-make examples, alt trans and alt forms textboxes disables when currenttranslation is null
+-make listviews and grid views disabled or hidden when current trans is null
+-set maxheight on examples editor listview
+-fixed GridView was showing even with no items, by giving it a Width it got some height (why?), used MaxWidth instead
+-added clear button to example/alttrans/altform editors
+-added Alt Forms editor
 
 
 v 00.01.04 6/30/2017
@@ -46,6 +61,7 @@ v 00.01.04 6/30/2017
 
 
 v 00.01.03 6/29/2017
+-store alternate definitions, alternate forms and examples as JSON in the databse
 -added examples, altforms and alt translations JSON wrapper objects
 -added examples, altforms and alt translations converter classes (convert from JSON to string, convertback str to JSON)
 -changed translation data parser to import examples from files as JSON with string array in it

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:wp="using:Microsoft.Toolkit.Uwp.UI.Controls.WrapPanel"
     xmlns:sf="using:Syncfusion.UI.Xaml.Grid"
     mc:Ignorable="d">
 
@@ -30,6 +31,8 @@
 
         <local:PartsOfSpeechConverter x:Key="POSConverter"/>
         <local:ExamplesConverter x:Key="ExamplesConverter"/>
+        <local:AltTranslationsConverter x:Key="AltTranslationsConverter"/>
+        <local:AltFormsConverter x:Key="AltFormsConverter"/>
 
         <Style TargetType="sf:GridCell">
             <Setter Property="BorderBrush" Value="Transparent" />
@@ -69,7 +72,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.01.03 6/29/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.03.00 7/1/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
                 <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"/>
                 <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-OffWhite}" Header="Translation"/>
                 <Button Content="Add Translation" Margin="10" Click="AddNewTranslation_Click" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"/>
@@ -122,25 +125,7 @@
                             <Button Content="Refresh" Margin="10,38,10,10" Click="{x:Bind CurrentDictionary.UpdateCurrentGoogleTranslation}" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
                                     Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"/>
                         </StackPanel>
-                      
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Name="NewExampleTextBox"  Header="Examples" Margin="10" Width="200" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}"
-                                     IsSpellCheckEnabled="False"/>
-                            <Button Content="Add" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
-                                    IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"/>
-                        </StackPanel>
-                        <ListView Margin="10" ItemsSource="{x:Bind CurrentDictionary.CurrentTranslation.Examples, Mode=OneWay, Converter={StaticResource ExamplesConverter}}"
-                                  Width="325" HorizontalAlignment="Left" Background="#373737" SelectionMode="None">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <RelativePanel Width="325">
-                                        <TextBlock Name="ExampleText" RelativePanel.AlignLeftWithPanel="True" Margin="0,7,0,0" Text="{Binding}" Foreground="{StaticResource SE-OffWhite}"></TextBlock>
-                                        <Button RelativePanel.AlignRightWithPanel="True" Margin="0,0,25,0" Content="X" Foreground="{StaticResource SE-OffWhite}" FontWeight="Bold"></Button>
-                                    </RelativePanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        
+
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Vertical">
@@ -151,15 +136,127 @@
                                       SelectedItem="{x:Bind CurrentDictionary.CurrentTranslation.PartOfSpeech, Mode=TwoWay, TargetNullValue=''}"
                                       SelectionChanged="{x:Bind CurrentDictionary.UpdateCurrentTranslation}">
                             </ComboBox>
-                            
-                            
-                            <Button Content="Update" Margin="10,38,10,10" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+
+                            <Border BorderBrush="{StaticResource SE-OffWhite}" BorderThickness="1">
+                                <StackPanel Orientation="Horizontal" Padding="10">
+                                    <Button Content="Update" Margin="10" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
                                 Click="{x:Bind CurrentDictionary.UpdateCurrentTranslation}"/>
-                            <Button Content="Delete" Margin="10,38,10,10" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                    <Button Content="Delete" Margin="10" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
                                 Click="{x:Bind CurrentDictionary.DeleteCurrentTranslation}"/>
+                                </StackPanel>
+                            </Border>
+                            
                         </StackPanel>
 
-    
+                        <!--Example Sentence Editor-->
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="NewExampleTextBox"  Header="Examples" Margin="10" Width="200" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}"
+                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"/>
+                            <Button Content="Add" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                    IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                    Click="AddExample_Click"/>
+                            <Button Content="Clear" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                    IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                    Click="ClearExamples_Click"/>
+                        </StackPanel>
+                        <ListView Name="ExamplesList" Margin="10" ItemsSource="{x:Bind CurrentDictionary.CurrentTranslation.Examples, Mode=OneWay, Converter={StaticResource ExamplesConverter}}"
+                                  Width="325" MaxHeight="71" HorizontalAlignment="Left" Background="#373737" SelectionMode="None" Visibility="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="MinHeight" Value="0"/>
+                                    <Setter Property="Padding" Value="4,2"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <RelativePanel Width="325">
+                                        <TextBlock Name="ExampleText" RelativePanel.AlignLeftWithPanel="True" Margin="0,2,0,0" Text="{Binding}" FontSize="13" Foreground="{StaticResource SE-OffWhite}"
+                                                   MaxWidth="290">
+                                        </TextBlock>
+                                        <Button RelativePanel.AlignRightWithPanel="True" Margin="0,1,10,0" Content="X" Foreground="{StaticResource SE-OffWhite}" FontSize="11"
+                                                Click="DeleteExample_Click" Padding="2,0,2,0">
+                                        </Button>
+                                    </RelativePanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <!--Alternate Translations Editor-->
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="NewAltTransTextBox"  Header="Alt Translations" Margin="10" Width="200" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}"
+                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"/>
+                            <Button Content="Add" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                    IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                    Click="AddAltTrans_Click"/>
+                            <Button Content="Clear" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                    IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                    Click="ClearAltTrans_Click"/>
+                        </StackPanel>
+                        <GridView Name="AltTransList" Margin="10" ItemsSource="{x:Bind CurrentDictionary.CurrentTranslation.AltTranslations, Mode=OneWay, Converter={StaticResource AltTranslationsConverter}}"
+                                  MaxWidth="325" MaxHeight="84" HorizontalAlignment="Left" Background="#373737" SelectionMode="None" Visibility="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <wp:WrapPanel Orientation="Horizontal"></wp:WrapPanel>
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="MinHeight" Value="0"/>
+                                    <Setter Property="Padding" Value="4,2"/>
+                                    <Setter Property="Width" Value="Auto"/>
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <RelativePanel Width="Auto" MinHeight="0">
+                                        <TextBlock Name="AltTransText" RelativePanel.AlignLeftWithPanel="True" Margin="0,10,0,0" Text="{Binding}" FontSize="13" Foreground="{StaticResource SE-OffWhite}"></TextBlock>
+                                        <Button RelativePanel.RightOf="AltTransText" Margin="5,10,10,0" Content="X" Foreground="{StaticResource SE-OffWhite}" FontSize="11"
+                                                Click="DeleteAltTrans_Click" Padding="2,0,2,0">
+                                        </Button>
+                                    </RelativePanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+
+                        <!--Alternate Forms Editor-->
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="NewAltFormTextBox"  Header="Alt Forms" Margin="10" Width="200" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}"
+                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"/>
+                            <Button Content="Add" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                    IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                    Click="AddAltForm_Click"/>
+                            <Button Content="Clear" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                                    IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                    Click="ClearAltForms_Click"/>
+                        </StackPanel>
+                        <GridView Name="AltFormsList" Margin="10" ItemsSource="{x:Bind CurrentDictionary.CurrentTranslation.AltForms, Mode=OneWay, Converter={StaticResource AltFormsConverter}}"
+                                  MaxWidth="325" MaxHeight="84" HorizontalAlignment="Left" Background="#373737" SelectionMode="None" Visibility="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <wp:WrapPanel Orientation="Horizontal"></wp:WrapPanel>
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="MinHeight" Value="0"/>
+                                    <Setter Property="Padding" Value="4,2"/>
+                                    <Setter Property="Width" Value="Auto"/>
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <RelativePanel Width="Auto" MinHeight="0">
+                                        <TextBlock Name="AltFormsText" RelativePanel.AlignLeftWithPanel="True" Margin="0,10,0,0" Text="{Binding}" FontSize="13" Foreground="{StaticResource SE-OffWhite}"></TextBlock>
+                                        <Button RelativePanel.RightOf="AltFormsText" Margin="5,10,10,0" Content="X" Foreground="{StaticResource SE-OffWhite}" FontSize="11"
+                                                Click="DeleteAltForm_Click" Padding="2,0,2,0">
+                                        </Button>
+                                    </RelativePanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
 
 
                     </StackPanel>
@@ -187,6 +284,8 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
+            <!--Translations Search Box-->
+            
             <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <TextBlock Text="Search" Padding="10,15,0,0" FontWeight="Bold" Foreground="{StaticResource SE-Yellow}"/>
                 <AutoSuggestBox Name="SearchBox" PlaceholderText="Search Translations" Margin="10" Width="400"
@@ -194,6 +293,8 @@
                 <TextBlock Margin="10" Foreground="{StaticResource SE-Yellow}"/>
             </StackPanel>
 
+            <!--Translations List Grid-->
+            
             <sf:SfDataGrid x:Name="TranslationGrid" Grid.Row="1" Margin="10" RowStyle="{StaticResource customRowStyle}" AlternatingRowStyle="{StaticResource alternatingRowStyle}"
                        RowSelectionBrush="#edce09" SelectionForegroundBrush="{StaticResource SE-DarkGray}" HeaderStyle="{StaticResource headerStyle}" BorderThickness="0"
                        ItemsSource="{x:Bind CurrentDictionary.Dictionary, Mode=OneWay}"
@@ -205,11 +306,11 @@
                        ColumnSizer="Star"
                        NavigationMode="Row">
                 <sf:SfDataGrid.Columns>
-                    <sf:GridTextColumn MappingName="Term" HeaderText="dismyk"/>
-                    <sf:GridTextColumn MappingName="ImportedTranslation"/>
-                    <sf:GridTextColumn MappingName="UserTranslation"/>
-                    <sf:GridTextColumn MappingName="GoogleTranslation"/>
-                    <sf:GridTextColumn DisplayBinding="{Binding PartOfSpeech, Converter={StaticResource POSConverter}}"/>
+                    <sf:GridTextColumn MappingName="Term" HeaderText="Term"/>
+                    <sf:GridTextColumn MappingName="ImportedTranslation" HeaderText="Imported Translation"/>
+                    <sf:GridTextColumn MappingName="UserTranslation" HeaderText="User Translation"/>
+                    <sf:GridTextColumn MappingName="GoogleTranslation" HeaderText="Google Translation"/>
+                    <sf:GridTextColumn DisplayBinding="{Binding PartOfSpeech, Converter={StaticResource POSConverter}}" HeaderText="PoS"/>
                 </sf:SfDataGrid.Columns>
 
             </sf:SfDataGrid>

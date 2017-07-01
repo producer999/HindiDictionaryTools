@@ -136,6 +136,8 @@ namespace HindiDictionaryTools
             _importedTranslation = importTrans;
             _partOfSpeech = PartsOfSpeechConverter.ImportPartOfSpeechFromString(pos);
             _examples = examples;
+            _altTranslations = "{ \"altTrans\": [] }";
+            _altForms = "{ \"altForms\": [] }";
         }
 
         //Constructor to use for manual translation entry
@@ -147,6 +149,9 @@ namespace HindiDictionaryTools
             _googleTranslation = "";
             _importedTranslation = "";
             _partOfSpeech = PartsOfSpeech.Other;
+            _examples = "{ \"examples\": [] }";
+            _altTranslations = "{ \"altTrans\": [] }";
+            _altForms = "{ \"altForms\": [] }";
         }
 
     }

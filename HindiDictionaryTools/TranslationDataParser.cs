@@ -101,7 +101,7 @@ namespace HindiDictionaryTools
                     }
                         
                     else
-                        ex = "";
+                        ex = "{ \"examples\": [] }";
 
                     DBHelper.Insert(new HindiTranslation(term, def, posstr, ex));
                 }
