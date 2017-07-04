@@ -33,6 +33,10 @@ Coming Soon:
 ****fix copy past from pdf doesnt show a hindi font
 
 
+v 00.05.00 7/4/17
+-removed spell checking from autosuggestbox
+
+
 v 00.03.00 7/1/2017
 -finished designing the look of the Examples editor ListView
 -examples listview now functional to update the examples proerty on the Current Translation

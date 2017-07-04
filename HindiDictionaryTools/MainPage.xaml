@@ -72,7 +72,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.03.00 7/1/17" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.05.00" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
                 <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"/>
                 <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-OffWhite}" Header="Translation"/>
                 <Button Content="Add Translation" Margin="10" Click="AddNewTranslation_Click" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"/>
@@ -81,12 +81,12 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <TextBlock Text="" Margin="10"/>
+                <TextBlock Text="© 2017 sourcEleven" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="10" Text="Total Translations: " Foreground="{StaticResource SE-OffWhite}"/>
                     <TextBlock Margin="10" Text="{x:Bind CurrentDictionary.Dictionary.Count, Mode=OneWay}" Foreground="{StaticResource SE-Yellow}"/>
                 </StackPanel>
-                <Button Content="Clear Database" Margin="10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
+                <Button Content="Clear Database" Margin="10" IsEnabled="False" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
                         Click="{x:Bind CurrentDictionary.DeleteAllTranslations}"/>
             </StackPanel>
 
@@ -137,7 +137,7 @@
                                       SelectionChanged="{x:Bind CurrentDictionary.UpdateCurrentTranslation}">
                             </ComboBox>
 
-                            <Border BorderBrush="{StaticResource SE-OffWhite}" BorderThickness="1">
+                            <Border BorderBrush="{StaticResource SE-OffWhite}" BorderThickness="1" Margin="5">
                                 <StackPanel Orientation="Horizontal" Padding="10">
                                     <Button Content="Update" Margin="10" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
                                 Click="{x:Bind CurrentDictionary.UpdateCurrentTranslation}"/>
@@ -289,7 +289,13 @@
             <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <TextBlock Text="Search" Padding="10,15,0,0" FontWeight="Bold" Foreground="{StaticResource SE-Yellow}"/>
                 <AutoSuggestBox Name="SearchBox" PlaceholderText="Search Translations" Margin="10" Width="400"
-                                TextChanged="Search_TextChanged" QueryIcon="Find"/>
+                                TextChanged="Search_TextChanged" QueryIcon="Find">
+                    <AutoSuggestBox.TextBoxStyle>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
+                            <Setter Property="IsSpellCheckEnabled" Value="False"/>
+                        </Style>
+                    </AutoSuggestBox.TextBoxStyle>
+                </AutoSuggestBox>
                 <TextBlock Margin="10" Foreground="{StaticResource SE-Yellow}"/>
             </StackPanel>
 
