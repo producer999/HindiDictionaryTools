@@ -266,6 +266,8 @@
 
         </Grid>
 
+        <!-- Horizontal Grid Splitter -->
+        
         <controls:GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" 
                                ResizeBehavior="PreviousAndNext" ResizeDirection="Rows" Background="Black">
             <controls:GridSplitter.Element>
