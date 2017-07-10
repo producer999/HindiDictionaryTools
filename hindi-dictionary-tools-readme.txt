@@ -20,20 +20,26 @@ https://codeblog.jonskeet.uk/2015/01/30/clean-event-handlers-invocation-with-c-6
 
 Coming Soon:
 
-****when pressing Enter in def/examples/alt trans/alt forms entry fields, activate the Add Button
+
 ****add stop button during import that cancels the import where it is
 ****add timer to show how long an import took
-****fix listview binding on top right (doesnt show empty values for null current translation)
 ****add a textblock that displayes the numbers of search results after searching
-****make call to automatically UpdateTranslation to databse when navigating away from a translation (improve)
-****get database to update all changes made automatially (add button?, do automatically?) (improve)
-****add Copy Database button to make a copy of the dataase on the desktop (or chosen location)
+****add Copy Database button to make a copy of the database on the desktop (or chosen location)
 ****add a "Favorite" or "starred" translation attribute to the translation itself that can be used to promote it
-****add splash screen
-****fix copy past from pdf doesnt show a hindi font
+
+XXXX fix copy past from pdf doesnt show a hindi font (problem with font, not app, may be unfixable)
+XXXX add IME support (google or microsoft) (might be impossible for now)
 
 
-v 00.05.00 7/4/17
+v 00.07.00 7/10/2017
+-add splash screen
+
+
+v 00.06.00 7/5/2017
+-fix pressing Enter in def/examples/alt trans/alt forms entry fields, activate the Add Button using KeyUp handler
+
+
+v 00.05.00 7/4/2017
 -removed spell checking from autosuggestbox
 
 

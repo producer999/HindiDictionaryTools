@@ -14,6 +14,8 @@
         <local:HindiDictionary/>
     </Page.DataContext>
     
+    <!-- Page Resources -->
+    
     <Page.Resources>
         <SolidColorBrush x:Key="SE-DarkGray" Color="#262626"/>
         <SolidColorBrush x:Key="SE-Yellow" Color="#ffde00"/>
@@ -72,9 +74,11 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.05.00" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
-                <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"/>
-                <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-OffWhite}" Header="Translation"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.07.00" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"
+                         KeyUp="AddNewTranslation_KeyUp" FontFamily="Nirmala UI"/>
+                <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-OffWhite}" Header="Translation"
+                         KeyUp="AddNewTranslation_KeyUp"/>
                 <Button Content="Add Translation" Margin="10" Click="AddNewTranslation_Click" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"/>
                 <Button Content="Import From File" Margin="10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
                         Click="{x:Bind CurrentDictionary.ImportTranslationsFromFile}"/>
@@ -90,6 +94,8 @@
                         Click="{x:Bind CurrentDictionary.DeleteAllTranslations}"/>
             </StackPanel>
 
+            <!-- Vertical GridSplitter -->
+            
             <controls:GridSplitter Grid.Column="2" Width="4" VerticalAlignment="Stretch" 
                                ResizeBehavior="PreviousAndNext"  ResizeDirection="Columns" Background="Black">
                 <controls:GridSplitter.Element>
@@ -108,6 +114,8 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Current Term, Imported Translation, User Translation, Google Translation -->
+                    
                     <StackPanel Grid.Column="0" Orientation="Vertical">
                         <TextBlock Text="" Margin="10"/>
                         <TextBox Name="CurrentTermField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term" IsSpellCheckEnabled="False"
@@ -152,7 +160,8 @@
                         
                         <StackPanel Orientation="Horizontal">
                             <TextBox Name="NewExampleTextBox"  Header="Examples" Margin="10" Width="200" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}"
-                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"/>
+                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                     KeyUp="AddExample_KeyUp"/>
                             <Button Content="Add" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
                                     IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
                                     Click="AddExample_Click"/>
@@ -186,7 +195,8 @@
                         
                         <StackPanel Orientation="Horizontal">
                             <TextBox Name="NewAltTransTextBox"  Header="Alt Translations" Margin="10" Width="200" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}"
-                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"/>
+                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                     KeyUp="AddAltTrans_KeyUp"/>
                             <Button Content="Add" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
                                     IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
                                     Click="AddAltTrans_Click"/>
@@ -224,7 +234,8 @@
                         
                         <StackPanel Orientation="Horizontal">
                             <TextBox Name="NewAltFormTextBox"  Header="Alt Forms" Margin="10" Width="200" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}"
-                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"/>
+                                     IsSpellCheckEnabled="False" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
+                                     KeyUp="AddAltForm_KeyUp"/>
                             <Button Content="Add" Margin="10,38,10,10" Foreground="{StaticResource SE-OffWhite}" BorderBrush="{StaticResource SE-Yellow}" BorderThickness="1"
                                     IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
                                     Click="AddAltForm_Click"/>
