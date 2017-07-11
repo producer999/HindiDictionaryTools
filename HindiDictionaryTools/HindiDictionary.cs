@@ -57,6 +57,7 @@ namespace HindiDictionaryTools
         public HindiDictionary(string fileName)
         {
             FileName = fileName;
+
             DBHelper.CreateDatabase(FileName);
 
             Dictionary = DBHelper.GetAllTranslations();
@@ -102,6 +103,31 @@ namespace HindiDictionaryTools
                 //force PropertyChanged event on the Dictionary or it will not refresh in the ListView
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Dictionary"));
             }        
+        }
+
+        public async void LoadDatabaseFromFile()
+        {
+            if(await DBHelper.LoadDatabaseFromFileAsync())
+            {
+                Dictionary = DBHelper.GetAllTranslations();
+                CurrentTranslation = Dictionary.First();
+                IsCurrentTranslationSelected = true;
+
+                //force PropertyChanged event on the Dictionary or it will not refresh in the ListView
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Dictionary"));
+            }          
+        }
+
+        public async void SaveDatabaseAs()
+        {
+            if(await DBHelper.CopyDatabaseAsync())
+            {
+                Debug.WriteLine("Database successfully saved to a new location.");
+            }
+            else
+            {
+                Debug.WriteLine("\nERROR: There was a problem saving the current database to a new file.\n");
+            }
         }
 
         public void UpdateCurrentTranslation()

@@ -24,11 +24,17 @@ Coming Soon:
 ****add stop button during import that cancels the import where it is
 ****add timer to show how long an import took
 ****add a textblock that displayes the numbers of search results after searching
-****add Copy Database button to make a copy of the database on the desktop (or chosen location)
 ****add a "Favorite" or "starred" translation attribute to the translation itself that can be used to promote it
 
 XXXX fix copy past from pdf doesnt show a hindi font (problem with font, not app, may be unfixable)
 XXXX add IME support (google or microsoft) (might be impossible for now)
+
+
+v 00.07.02 7/11/2017
+-fixed bug in release build where a call to GetFileAsync to check for database existence would run forever
+	-had to change file check to use FileInfo object and Exists property (non-async)
+-added an Import Database button to load existing databases for editing, instead of copying database from App folder
+-add Save Database As button to make a copy of the database on the desktop (or chosen location)
 
 
 v 00.07.00 7/10/2017

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="66d379af-234d-4c29-ac34-f00b307df651" Publisher="CN=produ" Version="1.0.0.0" />
+  <Identity Name="HindiDictionaryTools-0.07.00" Publisher="CN=produ" Version="0.7.0.0" />
   <mp:PhoneIdentity PhoneProductId="66d379af-234d-4c29-ac34-f00b307df651" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>HindiDictionaryTools</DisplayName>
-    <PublisherDisplayName>produ</PublisherDisplayName>
+    <PublisherDisplayName>sourcEleven</PublisherDisplayName>
     <Logo>assets\Store\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,14 +15,14 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="HindiDictionaryTools.App">
-      <uap:VisualElements DisplayName="HindiDictionaryTools" Square150x150Logo="assets\Medium\Medium150x150Logo.png" Square44x44Logo="assets\AppList\AppList.png" Description="HindiDictionaryTools" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="assets\Wide\Wide310x150Logo.png" Square71x71Logo="assets\Small\Small71x71Logo.png" Square310x310Logo="assets\Large\Large310x310Logo.png"></uap:DefaultTile>
+      <uap:VisualElements DisplayName="Hindi Dictionary Tools" Square150x150Logo="assets\Medium\Medium150x150Logo.png" Square44x44Logo="assets\AppList\AppList.png" Description="Hindi Dictionary Tools developed by sourcEleven copyright 2017" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="assets\Wide\Wide310x150Logo.png" Square71x71Logo="assets\Small\Small71x71Logo.png" Square310x310Logo="assets\Large\Large310x310Logo.png">
+        </uap:DefaultTile>
         <uap:SplashScreen Image="assets\SplashScreen\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
-    <Capability Name="internetClientServer" />
   </Capabilities>
 </Package>
