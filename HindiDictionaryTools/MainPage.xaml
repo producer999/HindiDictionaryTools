@@ -74,7 +74,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.07.02" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.07.03" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
                 <TextBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"
                          KeyUp="AddNewTranslation_KeyUp" FontFamily="Nirmala UI"/>
                 <TextBox Name="NewTranslationEntryField" Margin="10" Height="100" Foreground="{StaticResource SE-OffWhite}" Header="Translation"

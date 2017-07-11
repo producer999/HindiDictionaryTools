@@ -30,7 +30,7 @@ XXXX fix copy past from pdf doesnt show a hindi font (problem with font, not app
 XXXX add IME support (google or microsoft) (might be impossible for now)
 
 
-v 00.07.02 7/11/2017
+v 00.07.03 7/11/2017
 -fixed bug in release build where a call to GetFileAsync to check for database existence would run forever
 	-had to change file check to use FileInfo object and Exists property (non-async)
 -added an Import Database button to load existing databases for editing, instead of copying database from App folder
