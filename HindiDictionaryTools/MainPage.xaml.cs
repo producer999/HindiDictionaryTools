@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using sourcEleven.UWP.HindiSuggestBoxPCL;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -45,6 +46,17 @@ namespace HindiDictionaryTools
             // Populate the Part of Speech ComboBox with the PartsOfSpeech Enumeration
             var _posEnum = Enum.GetValues(typeof(PartsOfSpeech)).Cast<PartsOfSpeech>();
             PartOfSpeechSelector.ItemsSource = _posEnum.ToList();
+
+            EnableHindiIMEs();
+        }
+
+        private void EnableHindiIMEs()
+        {
+            SearchBox.EnableHindiIME();
+            NewTermEntryField.EnableHindiIME();
+            NewExampleTextBox.EnableHindiIME();
+            NewAltFormTextBox.EnableHindiIME();
+            CurrentTermField.EnableHindiIME();
         }
 
         //

@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>HindiDictionaryTools_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -119,7 +119,7 @@
     <Content Include="Assets\AJAY_normal.TTF" />
     <Content Include="Assets\AJAY_Normal_bold_italic.TTF" />
     <Content Include="Assets\AJAY_Normal1.TTF" />
-    <Content Include="Assets\HINDI_DB_01.sqlite" />
+    <None Include="Assets\HINDI_DB_01.sqlite" />
     <None Include="HindiDictionaryTools_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +232,10 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="HindiSuggestBoxPCL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\HindiIMETextboxControl\HindiSuggestBoxPCL\HindiSuggestBoxPCL\obj\Debug\HindiSuggestBoxPCL.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Data.UWP, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\15.2.0.40\Assemblies for Universal Windows\10.0\Syncfusion.Data.UWP.dll</HintPath>

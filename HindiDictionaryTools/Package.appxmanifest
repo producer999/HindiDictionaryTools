@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="HindiDictionaryTools-0.07.00" Publisher="CN=produ" Version="0.7.0.0" />
+  <Identity Name="HindiDictionaryTools" Publisher="CN=produ" Version="0.7.3.0" />
   <mp:PhoneIdentity PhoneProductId="66d379af-234d-4c29-ac34-f00b307df651" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>HindiDictionaryTools</DisplayName>
+    <DisplayName>Hindi Dictionary Tools</DisplayName>
     <PublisherDisplayName>sourcEleven</PublisherDisplayName>
     <Logo>assets\Store\StoreLogo.png</Logo>
   </Properties>

@@ -11,6 +11,7 @@ The Tools app creates a database of Hindi Translations based off of User Input, 
 
 References:
 
+https://github.com/producer999/HindiSuggestBox
 http://bsubramanyamraju.blogspot.in/2016/12/windows-10-uwp-sqlite-how-to-store-data.html
 http://www.cfilt.iitb.ac.in/~hdict/webinterface_user/index.php
 http://www.c-sharpcorner.com/UploadFile/2b876a/consume-web-service-using-httpclient-to-post-and-get-json-da/
@@ -26,8 +27,12 @@ Coming Soon:
 ****add a textblock that displayes the numbers of search results after searching
 ****add a "Favorite" or "starred" translation attribute to the translation itself that can be used to promote it
 
-XXXX fix copy past from pdf doesnt show a hindi font (problem with font, not app, may be unfixable)
-XXXX add IME support (google or microsoft) (might be impossible for now)
+XXXX fix copy paste from pdf doesnt show a hindi font (problem with font, not app, may be unfixable)
+
+
+
+v 00.08.00 9/18/2017
+-added IME/transliteration-to-hindi-script support using HindiSuggestBox Extension Class Library
 
 
 v 00.07.03 7/11/2017
