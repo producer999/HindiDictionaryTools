@@ -371,7 +371,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Hindi Dictionary Tools v0.7" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
+                <TextBlock Text="Hindi Dictionary Tools v0.8" Margin="10" Foreground="{StaticResource SE-Yellow}"/>
                 <AutoSuggestBox Name="NewTermEntryField" Margin="10" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"
                          KeyUp="AddNewTranslation_KeyUp" FontFamily="Nirmala UI" MaxWidth="175">
                     <AutoSuggestBox.TextBoxStyle>
@@ -427,9 +427,6 @@
                     
                     <StackPanel Grid.Column="0" Orientation="Vertical">
                         <TextBlock Text="" Margin="10"/>
-                        <!--<TextBox Name="CurrentTermField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term" IsSpellCheckEnabled="False"
-                                     Text="{x:Bind CurrentDictionary.CurrentTranslation.Term, Mode=TwoWay, TargetNullValue=''}" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
-                                     LostFocus="{x:Bind CurrentDictionary.UpdateCurrentTranslation}"/>-->
                         <AutoSuggestBox Name="CurrentTermField" Margin="10" Width="325" HorizontalAlignment="Left" Foreground="{StaticResource SE-OffWhite}" Header="Hindi Term"
                                      Text="{x:Bind CurrentDictionary.CurrentTranslation.Term, Mode=TwoWay, TargetNullValue=''}" IsEnabled="{x:Bind CurrentDictionary.IsCurrentTranslationSelected, Mode=OneWay}"
                                      LostFocus="{x:Bind CurrentDictionary.UpdateCurrentTranslation}">
