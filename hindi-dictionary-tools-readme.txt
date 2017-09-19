@@ -30,7 +30,6 @@ Coming Soon:
 XXXX fix copy paste from pdf doesnt show a hindi font (problem with font, not app, may be unfixable)
 
 
-
 v 00.08.00 9/18/2017
 -added IME/transliteration-to-hindi-script support using HindiSuggestBox Extension Class Library
 
